@@ -12,7 +12,7 @@ def TablaClientes(request):
     grupos = grupo_user(request)
     TClientes = tblClientes.objects.exclude(ID = 1).all()
     ServiciosWeb = servicioActivo()
-    return render(request, 'cliente/index.html',{'grupos': grupos,'ServiciosWeb': ServiciosWeb,'TClientes': TClientes})
+    return render(request, 'Cliente/index.html',{'grupos': grupos,'ServiciosWeb': ServiciosWeb,'TClientes': TClientes})
 
 # -------------------------------------------------------PROVEEDORES-------------------------------------------------------
 def TablaProveedores(request):
