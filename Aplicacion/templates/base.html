@@ -159,7 +159,7 @@
                                 {% block head %}{% endblock %}
                             </div>
                         </div>
-                        <ul class="navbar-nav header-right ocultar">
+                        <ul class="navbar-nav header-right">
                             <li class="nav-item">
                                 <div class="input-group search-area">
                                     <input type="text" class="form-control" placeholder="Search here...">
@@ -167,7 +167,7 @@
                                                 class="flaticon-381-search-2"></i></a></span>
                                 </div>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <div class="dropdown">
                                     <button class="btn btn-primary d-sm-inline-block d-none dropdown-toggle"
                                         type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -184,7 +184,7 @@
                             <li class="nav-item ocultar">
                                 <a href="javascript:void(0);" class="btn btn-primary d-sm-inline-block d-none">Generate
                                     Report<i class="las la-signal ms-3 scale5"></i></a>
-                            </li>
+                            </li> -->
                         </ul>
 
                     </div>
@@ -253,15 +253,22 @@
                             <span class="nav-text">CONFIGURACIÓN</span>
                         </a>
                     </li>
-                    <li><a href="{% url 'aplicacion:Login' %}" class="ai-icon" aria-expanded="false">
+                    <!-- <li><a href="{% url 'aplicacion:Login' %}" class="ai-icon" aria-expanded="false">
                             <i class="flaticon-013-checkmark"></i>
-                            <span class="nav-text">CERRAR SESIÓN</span>
+                            <span class="nav-text">INICIAR </span>
                         </a>
+                    </li> -->
+                    <li>
+                        <form action="{% url 'aplicacion:Logout' %}" method="post" style="all: unset;">
+                            {% csrf_token %}
+                            <button type="submit" class="ai-icon" aria-expanded="false"
+                                style="all: unset; cursor: pointer; width: 100%; display: flex; align-items: center;">
+                                <i class="flaticon-381-exit"></i>
+                                <span class="nav-text">CERRAR SESIÓN</span>
+                            </button>
+                        </form>
                     </li>
-                    <form action="{% url 'aplicacion:Logout' %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit">Cerrar sesión</button>
-                    </form>
+
                 </ul>
             </div>
         </div>

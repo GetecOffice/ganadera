@@ -39,7 +39,7 @@
                     <div class="card-body tab-content p-0">
                         <div class="tab-pane active show fade" id="monthly" role="tabpanel">
                             <div class="table-responsive">
-                                <table class="table table-responsive-md card-table transactions-table" id="miTabla">
+                                <table class="table table-responsive-md card-table transactions-table">
                                     <thead>
                                         <tr>
                                             <th class="text-black fs-16 font-w600 th-responsive">
@@ -100,16 +100,7 @@
                                                     {{Dato.FechaAsigna}}
                                                 </span>
                                             </td>
-                                            <td>
-                                                <span class="fs-16 text-black font-w400">
-                                                    {{Dato.Contacto}}
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <span class="fs-16 text-black font-w400">
-                                                    {{Dato.TelefonoContacto}}
-                                                </span>
-                                            </td>
+
                                             {% if perms.Aplicacion.change_tblcorrales or perms.Aplicacion.delete_tblcorrales %}
                                             <td>
                                                 {% if perms.Aplicacion.change_tblcorrales %}
