@@ -58,7 +58,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Ganadera.urls'
-
+CSRF_TRUSTED_ORIGINS = ['https://ganadera.up.railway.app/']
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
