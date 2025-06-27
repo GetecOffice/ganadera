@@ -19,7 +19,7 @@ th {
 }
 
 .columna {
-  flex: 0 0 50%;
+  flex: 0 0 100%;
   padding: 0 2%;
   /* col-sm-6: 6 de 12 columnas = 50% */
 }
