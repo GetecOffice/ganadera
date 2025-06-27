@@ -1,0 +1,1330 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}GANADERA{% endblock %}
+{% block body %}
+<!--**********************************
+            Content body start
+        ***********************************-->
+{% block head %}CATALOGO{% endblock %}
+<style>
+    .flip-card {
+        background-color: transparent;
+        width: 100%;
+        max-width: 300px;
+        height: 240px;
+        perspective: 1000px;
+        border: none;
+        border-radius: 16px;
+        position: relative;
+        /* necesario para posicionar el indicador */
+        overflow: hidden;
+    }
+
+    .flip-card-inner {
+        width: 100%;
+        transform-style: preserve-3d;
+        transition: transform 0.6s ease;
+        border-radius: 16px;
+    }
+
+    /* Clase que se agregará por JS al pasar por la esquina */
+    .flip-card.flipped .flip-card-inner {
+        transform: rotateY(180deg);
+    }
+
+    .flip-card-front,
+    .flip-card-back {
+        position: absolute;
+        width: 100%;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        backface-visibility: hidden;
+        background-color: #f5f6fa;
+        padding: 10px 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .flip-card-front {
+        z-index: 2;
+    }
+
+    .flip-card-back {
+        transform: rotateY(180deg);
+        z-index: 1;
+    }
+
+    /* Indicador visual en la esquina */
+    .flip-corner-indicator {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #e0e0e0 50%, transparent 50%);
+        top: 0;
+        left: 0;
+        z-index: 5;
+        cursor: pointer;
+        border-top-left-radius: 16px;
+    }
+
+    .flip-corner-indicator.top-right {
+        left: auto;
+        right: 0;
+        background: linear-gradient(-135deg, #e0e0e0 50%, transparent 50%);
+        border-top-left-radius: 0;
+        border-top-right-radius: 16px;
+    }
+
+    /* Imagen de perfil */
+    .profile-img-container {
+    display: inline-block;
+    border-radius: 50%;
+    padding: 0px; /* espacio para el borde */
+    }
+
+    .profile-img-container.logueado {
+    border: 3px solid rgba(76, 175, 80, 0.5); /* verde claro semitransparente */
+    }
+
+    .profile-img-container.no-logueado {
+    border: 3px solid rgba(244, 67, 54, 0.5); /* rojo claro semitransparente */
+    }
+
+    .profile-img {
+    border-radius: 50%;
+    display: block;
+    width: 80px; /* ajusta tamaño como necesites */
+    height: 80px;
+    object-fit: cover;
+    }
+
+    /* Tipografía */
+    .role-label {
+        font-weight: bold;
+        color: #333;
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+
+    .user-name {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #333;
+        margin-top: 0;
+        margin-bottom: 3px;
+    }
+
+    .user-email {
+        font-size: 0.85rem;
+        color: #777;
+        margin: 0;
+    }
+
+    .label-title {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #333;
+        margin: 4px 0 2px;
+        text-align: center;
+    }
+
+    .label-data {
+        font-size: 0.65rem;
+        color: #555;
+        margin-bottom: 4px;
+        text-align: center;
+    }
+
+    /* Botones */
+    .btn-action {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: background 0.3s ease;
+        border: none;
+        color: white;
+        margin: 5px 4px 0;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .btn-action.edit {
+        background-color: #3a77ff;
+    }
+
+    .btn-action.edit:hover {
+        background-color: #295bcc;
+    }
+
+    .btn-action.add {
+        background-color: #28a745;
+    }
+
+    .btn-action.add:hover {
+        background-color: #218838;
+    }
+
+    .mi-boton {
+        all: unset;
+        cursor: pointer;
+        /* Estilos personalizados si los necesitas */
+        padding: 0;
+        border-radius: 8px;
+        background-color: #eee;
+        width: 100%;
+    }
+    .imagen-desvanecida {
+        opacity: 0.4;          /* Hace la imagen semi-transparente */
+        filter: grayscale(100%); /* Opcional: la vuelve en escala de grises */
+        pointer-events: none;  /* Opcional: evita que se pueda clicar */
+    }
+</style>
+{% include "Modal/index.html" %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row" style="padding-right: 0 !important;">
+            <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;" id="Inicio">
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-8">
+                        <div class="card card-bx">
+                            <h4 class="m-0 p-0" style="text-align: center;">CANTIDAD DE ANIMALES</h4>
+                            <div class="card-info text-white m-0 p-0">
+                                <div class="d-flex align-items-center mt-3 mb-2">
+                                    <table class="table" id="peso">
+                                        <tr>
+                                            {% for animal in resultado_animales %}
+                                            <th class="fs-16 mb-0 text-black m-0 pb-1 pt-0" scope="col">
+                                                {{ animal.nombre }}
+                                            </th>
+                                            {% endfor %}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                {% for animal in resultado_animales %}
+                                                <td>
+                                                    <span class="fs-16 text-black font-w400">
+                                                        {{ animal.cantidad }}
+                                                    </span>
+                                                </td>
+                                                {% endfor %}
+                                            </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="card card-bx">
+                            <h4 class="m-0 p-0" style="text-align: center;">CORRALES</h4>
+                            <div class="card-info text-white m-0 p-0">
+                                <div class="d-flex align-items-center mt-3 mb-2">
+                                    <table class="table" id="batch">
+                                        <thead>
+                                            <tr>
+                                                <th class="fs-16 mb-0 text-black m-0 pb-1 pt-0" scope="col">
+                                                    Asignados
+                                                </th>
+                                                <th class="fs-16 mb-0 text-black m-0 pb-1 pt-0" scope="col">
+                                                    Liberados
+                                                </th>
+                                                <th class="fs-16 mb-0 text-black m-0 pb-1 pt-0" scope="col">
+                                                    Mantenimiento
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <span class="fs-16 text-black font-w400">
+                                                        {{corralesAsignados}}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="fs-16 text-black font-w400">
+                                                        {{corralesLiberados}}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="fs-16 text-black font-w400">
+                                                        0
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-8 col-xxl-8">
+                        <div class="card">
+                            <div class="card-header d-flex flex-wrap border-0 pb-0">
+                                <div class="me-auto mb-sm-0 mb-3">
+                                    <h4 class="card-title mb-2">Cantidad de corrales por clientes
+                                    </h4>
+                                    <span class="fs-12">La gráfica se actualiza automaticamente cada 5
+                                        segundos</span>
+                                </div>
+                            </div>
+                            <div class="card-body pb-2">
+                                <div id="chartBar10"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-xxl-4">
+                        <div class="card">
+                            <div class="card-header border-0 pb-0">
+                                <div>
+                                    <h4 class="card-title mb-2">Vehiculos</h4>
+                                    <span class="fs-12">Lorem ipsum dolor sit amet, consectetur</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% for t in datos_tolvas %}
+                                <div class="progress default-progress">
+                                    <div class="progress-bar bg-gradient-1 progress-animated"
+                                        style="width: {{ t.porcentaje|default_if_none:'0' }}%; height:20px;"
+                                        role="progressbar">
+                                        <span class="sr-only">{{ t.porcentaje }}% Complete</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-end mt-2 pb-3 justify-content-between pb-4">
+                                    <span class="font-w600 text-black">{{ t.alias }}</span>
+                                    <span class="fs-18">
+                                        <span class="text-black pe-2">{{ t.cantidad }}</span>/
+                                        {{t.capacidad}}
+                                    </span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-3 col-xxl-3">
+                        <div class="card cardcatalogo">
+                            <div class="card-header">
+                                <h4 class="card-title mb-2" style="text-align: center;">Corrales pendientes</h4>
+                            </div>
+                            <div class="card-body pb-2 cardcatalogob cardcatalogobImg">
+                                <div class="animacion mt-2">
+                                    <div class="loaderTime">
+                                        <span class="hour"></span>
+                                        <span class="min"></span>
+                                        <span class="circel"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <h4 class="mt-3" style="text-align: center;"><b>Registros: </b> <br> {{ pendientes }}
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-xxl-3">
+                        <div class="card cardcatalogo">
+                            <div class="card-header">
+                                <h4 class="card-title mb-2" style="text-align: center;">Cargar tolva</h4>
+                            </div>
+                            <div class="card-body pb-2 cardcatalogob">
+                                <div class="animacion">
+                                    <div class="loaderTolva">
+                                        <div class="truckWrapper">
+                                            <div class="truckBody">
+                                                <svg fill="none" viewBox="0 0 198 93" class="trucksvg">
+                                                    <path stroke-width="3" stroke="#282828" fill="#ffffff"
+                                                        d="M135 22.5H177.264C178.295 22.5 179.22 23.133 179.594 24.0939L192.33 56.8443C192.442 57.1332 192.5 57.4404 192.5 57.7504V89C192.5 90.3807 191.381 91.5 190 91.5H135C133.619 91.5 132.5 90.3807 132.5 89V25C132.5 23.6193 133.619 22.5 135 22.5Z">
+                                                    </path>
+                                                    <path stroke-width="3" stroke="#282828" fill="#7D7C7C"
+                                                        d="M146 33.5H181.741C182.779 33.5 183.709 34.1415 184.078 35.112L190.538 52.112C191.16 53.748 189.951 55.5 188.201 55.5H146C144.619 55.5 143.5 54.3807 143.5 53V36C143.5 34.6193 144.619 33.5 146 33.5Z">
+                                                    </path>
+                                                    <path stroke-width="2" stroke="#282828" fill="#282828"
+                                                        d="M150 65C150 65.39 149.763 65.8656 149.127 66.2893C148.499 66.7083 147.573 67 146.5 67C145.427 67 144.501 66.7083 143.873 66.2893C143.237 65.8656 143 65.39 143 65C143 64.61 143.237 64.1344 143.873 63.7107C144.501 63.2917 145.427 63 146.5 63C147.573 63 148.499 63.2917 149.127 63.7107C149.763 64.1344 150 64.61 150 65Z">
+                                                    </path>
+                                                    <rect stroke-width="2" stroke="#282828" fill="#FFFCAB" rx="1"
+                                                        height="7" width="5" y="63" x="187"></rect>
+                                                    <rect stroke-width="2" stroke="#282828" fill="#282828" rx="1"
+                                                        height="11" width="4" y="81" x="193"></rect>
+                                                    <rect stroke-width="3" stroke="#282828" fill="#1f1f2e" rx="2.5"
+                                                        height="90" width="121" y="1.5" x="6.5"></rect>
+                                                    <rect stroke-width="2" stroke="#282828" fill="#DFDFDF" rx="2"
+                                                        height="4" width="6" y="84" x="1"></rect>
+                                                </svg>
+                                            </div>
+                                            <div class="truckTires">
+                                                <svg fill="none" viewBox="0 0 30 30" class="tiresvg">
+                                                    <circle stroke-width="3" stroke="#282828" fill="#282828" r="13.5"
+                                                        cy="15" cx="15"></circle>
+                                                    <circle fill="#DFDFDF" r="7" cy="15" cx="15"></circle>
+                                                </svg>
+                                                <svg fill="none" viewBox="0 0 30 30" class="tiresvg">
+                                                    <circle stroke-width="3" stroke="#282828" fill="#282828" r="13.5"
+                                                        cy="15" cx="15"></circle>
+                                                    <circle fill="#DFDFDF" r="7" cy="15" cx="15"></circle>
+                                                </svg>
+                                            </div>
+                                            <div class="road"></div>
+                                            <svg xml:space="preserve" viewBox="0 0 453.459 453.459"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                xmlns="http://www.w3.org/2000/svg" id="Capa_1" version="1.1"
+                                                fill="#000000" class="lampPost">
+                                                <path d="M252.882,0c-37.781,0-68.686,29.953-70.245,67.358h-6.917v8.954c-26.109,2.163-45.463,10.011-45.463,19.366h9.993
+                                  c-1.65,5.146-2.507,10.54-2.507,16.017c0,28.956,23.558,52.514,52.514,52.514c28.956,0,52.514-23.558,52.514-52.514
+                                  c0-5.478-0.856-10.872-2.506-16.017h9.992c0-9.354-19.352-17.204-45.463-19.366v-8.954h-6.149C200.189,38.779,223.924,16,252.882,16
+                                  c29.952,0,54.32,24.368,54.32,54.32c0,28.774-11.078,37.009-25.105,47.437c-17.444,12.968-37.216,27.667-37.216,78.884v113.914
+                                  h-0.797c-5.068,0-9.174,4.108-9.174,9.177c0,2.844,1.293,5.383,3.321,7.066c-3.432,27.933-26.851,95.744-8.226,115.459v11.202h45.75
+                                  v-11.202c18.625-19.715-4.794-87.527-8.227-115.459c2.029-1.683,3.322-4.223,3.322-7.066c0-5.068-4.107-9.177-9.176-9.177h-0.795
+                                  V196.641c0-43.174,14.942-54.283,30.762-66.043c14.793-10.997,31.559-23.461,31.559-60.277C323.202,31.545,291.656,0,252.882,0z
+                                  M232.77,111.694c0,23.442-19.071,42.514-42.514,42.514c-23.442,0-42.514-19.072-42.514-42.514c0-5.531,1.078-10.957,3.141-16.017
+                                  h78.747C231.693,100.736,232.77,106.162,232.77,111.694z"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <h4 class="mt-3" style="text-align: center;"><b>Registros: </b> <br> {{ tolva }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-xxl-3">
+                        <div class="card cardcatalogo">
+                            <div class="card-header">
+                                <h4 class="card-title mb-2" style="text-align: center;">Captura manual</h4>
+                            </div>
+                            <div class="card-body pb-2 cardcatalogob">
+                                <div class="animacion mt-2">
+                                    <div class="typewriter">
+                                        <div class="slide"><i></i></div>
+                                        <div class="paper"></div>
+                                        <div class="keyboard"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-footer">
+                                <h4 class="mt-3" style="text-align: center;"><b>Registros: </b> <br> {{ manuales }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-xxl-3">
+                        <div class="card cardcatalogo">
+                            <div class="card-header d-flex flex-wrap border-0 pb-0">
+                                <div class="me-auto mb-sm-0 mb-3">
+                                    <h4 class="card-title mb-2" style="text-align: center;">Corrales servidos</h4>
+
+                                </div>
+                            </div>
+                            <div class="card-body pb-2 cardcatalogob">
+                                <img src="{% static 'images/catalogos/servidos.png' %}">
+                            </div>
+                            <div class="card-footer">
+                                <h4 class="mt-3" style="text-align: center;"><b>Registros: </b> <br> {{ servidos }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-3">
+            <hr>
+            <hr class="mb-5">
+            <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;" id="Catalogo">
+                <div class="card">
+                    <div class="card-header d-block d-sm-flex border-0">
+                        <div style="display: flex; justify-content: center; align-items: center; ">
+                            <h2>CÁTALOGOS</h2>
+                        </div>
+                    </div>
+                    <!-- Button trigger modal -->
+
+
+
+                    <div class="card-body tab-content p-0">
+                        <div class="tab-pane active show fade" id="monthly" role="tabpanel">
+                            <div class="fila px-4">
+                                <div class="columna">
+                                    {% if perms.Aplicacion.add_tblclientes or perms.Aplicacion.view_tblclientes %}
+                                    <a href="{% url 'catalogo:T_Cliente' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body cardcatalogob">
+                                                <h5 class="card-title--medium">Clientes<br></h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/cliente.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tblclientes and not perms.Aplicacion.view_tblclientes %}imagen-desvanecida{% endif %}">
+                                                <p class="mt-3"><b>Registros: </b> {{ ContClientes }}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tblclientes or perms.Aplicacion.view_tblclientes %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <div class="columna">
+                                    {% if perms.Aplicacion.add_tblproveedores or perms.Aplicacion.view_tblproveedores %}
+                                    <a href="{% url 'catalogo:T_Proveedor' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium">Proveedor</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/proveedores.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tblproveedores and not perms.Aplicacion.view_tblproveedores %}imagen-desvanecida{% endif %}">
+                                                <p class="mt-3"><b>Registros: </b> {{ ContProveedores }}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tblproveedores or perms.Aplicacion.view_tblproveedores %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <div class="columna">
+                                    {% if perms.Aplicacion.add_tbloperadores or perms.Aplicacion.view_tbloperadores %}
+                                    <a href="{% url 'catalogo:T_Operador' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium">Operador</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/operadores.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tbloperadores and not perms.Aplicacion.view_tbloperadores %}imagen-desvanecida{% endif %}">
+                                                <p class="mt-3"><b>Registros: </b> {{ ContOperadores }}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tbloperadores or perms.Aplicacion.view_tbloperadores %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <div class="columna">
+                                    {% if perms.Aplicacion.add_tblmateriaprima or perms.Aplicacion.view_tblmateriaprima %}
+                                    <a href="{% url 'catalogo:T_MateriaPrima' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium">Materia Prima</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/materias primas.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tblmateriaprima and not perms.Aplicacion.view_tblmateriaprima %}imagen-desvanecida{% endif %}">
+                                                <p class="mt-3"><b>Registros: </b> {{ ContMateriaPrima }}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tblmateriaprima or perms.Aplicacion.view_tblmateriaprima %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <div class="columna">
+                                    {% if perms.Aplicacion.add_tblproductos or perms.Aplicacion.view_tblproductos %}
+                                    <a href="{% url 'catalogo:T_Producto' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium">Productos</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/producto.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tblproductos and not perms.Aplicacion.view_tblproductos %}imagen-desvanecida{% endif %}">
+                                                <p class="mt-3"><b>Registros: </b> {{ ContProductos }}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tblproductos or perms.Aplicacion.view_tblproductos %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <div class="columna">
+                                    {% if perms.Aplicacion.add_tblcorrales or perms.Aplicacion.view_tblcorrales %}
+                                    <a href="{% url 'catalogo:T_Corral' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium">Corrales</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/corral.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tblcorrales and not perms.Aplicacion.view_tblcorrales %}imagen-desvanecida{% endif %}">
+                                                <p class="mt-3"><b>Registros: </b> {{ ContCorrales }}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tblcorrales or perms.Aplicacion.view_tblcorrales %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <div class="columna">
+                                    {% if perms.Aplicacion.add_tblanimalestipo or perms.Aplicacion.view_tblanimalestipo %}
+                                    <a href="{% url 'catalogo:T_TipoAnimal' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium">Tipo Animales</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/tipo animal.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tblanimalestipo and not perms.Aplicacion.view_tblanimalestipo %}imagen-desvanecida{% endif %}">
+                                                <p class="mt-3"><b>Registros: </b> {{ ContTipoAnimales }}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tblanimalestipo or perms.Aplicacion.view_tblanimalestipo %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <div class="columna">
+                                    {% if perms.Aplicacion.add_tblcontenedoresmateriaprima or perms.Aplicacion.view_tblcontenedoresmateriaprima %}
+                                    <a href="{% url 'catalogo:T_ContenedorMP' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium" title="Contenedores Materias Primas">C. Materia Prima</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/contenedores mp.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tblcontenedoresmateriaprima and not perms.Aplicacion.view_tblcontenedoresmateriaprima %}imagen-desvanecida{% endif %}">
+                                                <p class="mt-3"><b>Registros: </b> {{ ContContMatPrima }}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tblcontenedoresmateriaprima or perms.Aplicacion.view_tblcontenedoresmateriaprima %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <div class="columna">
+                                    {% if perms.Aplicacion.add_tblcontenedoresproductos or perms.Aplicacion.view_tblcontenedoresproductos %}
+                                    <a href="{% url 'catalogo:T_ContenedorProducto' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium" title="Contenedores Productos">C. Productos</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/contenedores.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tblcontenedoresproductos and not perms.Aplicacion.view_tblcontenedoresproductos %}imagen-desvanecida{% endif %}">
+                                                <p class="mt-3"><b>Registros: </b> {{ ContContProductos }}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tblcontenedoresproductos or perms.Aplicacion.view_tblcontenedoresproductos %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <div class="columna">
+                                    {% if perms.Aplicacion.add_tbltolva or perms.Aplicacion.view_tbltolva %}
+                                    <a href="{% url 'catalogo:T_Tolva' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium">Tolva</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/tolva.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tbltolva and not perms.Aplicacion.view_tbltolva %}imagen-desvanecida{% endif %}">
+                                                <p class="mt-3"><b>Registros: </b> {{ ContTolva }}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tbltolva or perms.Aplicacion.view_tbltolva %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-3">
+            <hr>
+            <hr class="mb-5">
+            <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;" id="Proceso">
+                <div class="card">
+                    <div class="card-header d-block d-sm-flex border-0">
+                        <div style="display: flex; justify-content: center; align-items: center; ">
+                            <h2>PROCESOS</h2>
+                        </div>
+                    </div>
+                    <div class="card-body tab-content p-0">
+                        <div class="tab-pane active show fade" id="monthly" role="tabpanel">
+                            <div class="row px-4">
+
+                                <!-- Animales -->
+                                <div class="col-sm-6 col-md-3 col-lg-2">
+                                    {% if perms.Aplicacion.add_tblmovimientoanimales or perms.Aplicacion.view_tblmovimientoanimales %}
+                                    <a href="{% url 'proceso:T_MovAnimales' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body cardcatalogob">
+                                                <h5 class="card-title--medium">Animales</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/animales.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tblmovimientoanimales and not perms.Aplicacion.view_tblmovimientoanimales %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tblmovimientoanimales or perms.Aplicacion.view_tblmovimientoanimales %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Asignación corral -->
+                                <div class="col-sm-6 col-md-3 col-lg-2">
+                                    {% if perms.Aplicacion.add_tblasignacorrales or perms.Aplicacion.view_tblasignacorrales %}
+                                    <a href="{% url 'proceso:T_Asignacion' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium">Asignación corral</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/asignacion.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tblasignacorrales and not perms.Aplicacion.view_tblasignacorrales %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tblasignacorrales or perms.Aplicacion.view_tblasignacorrales %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Báscula -->
+                                <div class="col-sm-6 col-md-3 col-lg-2">
+                                    {% if perms.Aplicacion.add_tblentradamp or perms.Aplicacion.view_tblentradamp or perms.Aplicacion.add_tblsalidamp or perms.Aplicacion.view_tblsalidamp or perms.Aplicacion.add_tblentradaproductos or perms.Aplicacion.view_tblentradaproductos or perms.Aplicacion.add_tblsalidaproductos or perms.Aplicacion.view_tblsalidaproductos %}
+                                    <a href="{% url 'proceso:T_Ent_Materia_Prima' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium">Báscula</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/bascula.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tblentradamp and not perms.Aplicacion.view_tblentradamp and not perms.Aplicacion.add_tblsalidamp and not perms.Aplicacion.view_tblsalidamp and not perms.Aplicacion.add_tblentradaproductos and not perms.Aplicacion.view_tblentradaproductos and not perms.Aplicacion.add_tblsalidaproductos and not perms.Aplicacion.view_tblsalidaproductos %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tblentradamp or perms.Aplicacion.view_tblentradamp or perms.Aplicacion.add_tblsalidamp or perms.Aplicacion.view_tblsalidamp or perms.Aplicacion.add_tblentradaproductos or perms.Aplicacion.view_tblentradaproductos or perms.Aplicacion.add_tblsalidaproductos or perms.Aplicacion.view_tblsalidaproductos %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Inventario -->
+                                <div class="col-sm-6 col-md-3 col-lg-2">
+                                    {% if perms.Aplicacion.add_tblinventarioinicialesmp or perms.Aplicacion.view_tblinventarioinicialesmp or perms.Aplicacion.add_tblinventarioinicialesproductos or perms.Aplicacion.view_tblinventarioinicialesproductos %}
+                                    <a href="{% url 'proceso:Inventario_Presentacion' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium">Inventario</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/Inventario.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tblinventarioinicialesmp and not perms.Aplicacion.view_tblinventarioinicialesmp and not perms.Aplicacion.add_tblinventarioinicialesproductos and not perms.Aplicacion.view_tblinventarioinicialesproductos %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tblinventarioinicialesmp or perms.Aplicacion.view_tblinventarioinicialesmp or perms.Aplicacion.add_tblinventarioinicialesproductos or perms.Aplicacion.view_tblinventarioinicialesproductos %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Servidos -->
+                                <div class="col-sm-6 col-md-3 col-lg-2">
+                                    {% if perms.Aplicacion.add_tblservido or perms.Aplicacion.view_tblservido %}
+                                    <a href="{% url 'proceso:T_Solicitud_Servidos' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium">Servidos</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/servidos.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tblservido and not perms.Aplicacion.view_tblservido %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tblservido or perms.Aplicacion.view_tblservido %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Vehículos (Tolva) -->
+                                <div class="col-sm-6 col-md-3 col-lg-2">
+                                    {% if perms.Aplicacion.add_tbltolva or perms.Aplicacion.view_tbltolva %}
+                                    <a href="{% url 'proceso:T_Cargamento_Tolva' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium">Vehículos</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/tolva.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tbltolva and not perms.Aplicacion.view_tbltolva %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tbltolva or perms.Aplicacion.view_tbltolva %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-3">
+            <hr>
+            <hr class="mb-5">
+            <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;" id="Subtabla">
+                <div class="card">
+                    <div class="card-header d-block d-sm-flex border-0">
+                        <div style="display: flex; justify-content: center; align-items: center; ">
+                            <h2>SUBTABLAS</h2>
+                        </div>
+                    </div>
+                    <div class="card-body tab-content p-0">
+                        <div class="tab-pane active show fade" id="monthly" role="tabpanel">
+                            <div class="fila px-4">
+                                <!-- Estatus -->
+                                <div class="columna">
+                                    {% if perms.Aplicacion.add_tblestatus or perms.Aplicacion.view_tblestatus %}
+                                    <a href="{% url 'subtabla:T_Estatus' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body cardcatalogob">
+                                                <h5 class="card-title--medium">Estatus</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/et.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tblestatus and not perms.Aplicacion.view_tblestatus %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tblestatus or perms.Aplicacion.view_tblestatus %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Tipo Material -->
+                                <div class="columna">
+                                    {% if perms.Aplicacion.add_tbltipomaterial or perms.Aplicacion.view_tbltipomaterial %}
+                                    <a href="{% url 'subtabla:T_Tipo_Material' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium">Tipo Material</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/mt1.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tbltipomaterial and not perms.Aplicacion.view_tbltipomaterial %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tbltipomaterial or perms.Aplicacion.view_tbltipomaterial %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Tipo Movimiento -->
+                                <div class="columna">
+                                    {% if perms.Aplicacion.add_tbltipomov or perms.Aplicacion.view_tbltipomov %}
+                                    <a href="{% url 'subtabla:T_Tipo_Movimiento' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium">Tipo Movimiento</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/mv.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tbltipomov and not perms.Aplicacion.view_tbltipomov %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tbltipomov or perms.Aplicacion.view_tbltipomov %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Tipo Presentación -->
+                                <div class="columna">
+                                    {% if perms.Aplicacion.add_tbltipopresentacion or perms.Aplicacion.view_tbltipopresentacion %}
+                                    <a href="{% url 'subtabla:T_Tipo_Presentacion' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium">Tipo Presentación</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/pt1.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tbltipopresentacion and not perms.Aplicacion.view_tbltipopresentacion %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tbltipopresentacion or perms.Aplicacion.view_tbltipopresentacion %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Unidad Medida -->
+                                <div class="columna">
+                                    {% if perms.Aplicacion.add_tblunidades or perms.Aplicacion.view_tblunidades %}
+                                    <a href="{% url 'subtabla:T_Unidad_Medida' %}">
+                                    {% else %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                    {% endif %}
+                                        <div class="card cardcatalogo">
+                                            <div class="card-body">
+                                                <h5 class="card-title--medium">Unidad Medida</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/md1.png' %}"
+                                                    class="{% if not perms.Aplicacion.add_tblunidades and not perms.Aplicacion.view_tblunidades %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    {% if perms.Aplicacion.add_tblunidades or perms.Aplicacion.view_tblunidades %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-3">
+            <hr>
+            <hr class="mb-5">
+            <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;" id="Reportes">
+                <div class="card">
+                    <div class="card-header d-block d-sm-flex border-0">
+                        <div style="display: flex; justify-content: center; align-items: center; ">
+                            <h2>REPORTES</h2>
+                        </div>
+                    </div>
+                    <div class="card-body tab-content p-0">
+                        <div class="tab-pane active show fade" id="monthly" role="tabpanel">
+                            <div class="row px-4">
+
+                                <div class="col-sm-12 col-md-12 col-lg-4">
+                                    <div class="card">
+                                    <div class="card-body">
+                                        <h3 style="text-align: center;">Servidos</h3>
+                                        <div class="row">
+
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            {% if perms.admin.view_logentry %}
+                                            <a href="{% url 'reporte:R_Movimientos_Servidos' %}">
+                                            {% else %}
+                                            <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body cardcatalogob">
+                                                <h5 class="card-title--medium">Movimientos</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/mov3.png' %}" class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                                </div>
+                                            </div>
+                                            {% if perms.admin.view_logentry %}
+                                            </a>
+                                            {% else %}
+                                            </button>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            {% if perms.admin.view_logentry %}
+                                            <a href="{% url 'reporte:R_Servidos_Liquidacion' %}">
+                                            {% else %}
+                                            <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                <h5 class="card-title--medium">Liq. cliente</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/cliente.png' %}" class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                                </div>
+                                            </div>
+                                            {% if perms.admin.view_logentry %}
+                                            </a>
+                                            {% else %}
+                                            </button>
+                                            {% endif %}
+                                        </div>
+
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-4">
+                                    <div class="card">
+                                    <div class="card-body">
+                                        <h3 style="text-align: center;">Materia Prima</h3>
+                                        <div class="row">
+
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            {% if perms.admin.view_logentry %}
+                                            <a href="{% url 'reporte:R_Entrada_Materia_Prima' %}">
+                                            {% else %}
+                                            <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body cardcatalogob">
+                                                <h5 class="card-title--medium">Entrada</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/emp2.png' %}" class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                                </div>
+                                            </div>
+                                            {% if perms.admin.view_logentry %}
+                                            </a>
+                                            {% else %}
+                                            </button>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            {% if perms.admin.view_logentry %}
+                                            <a href="{% url 'reporte:R_Salida_Materia_Prima' %}">
+                                            {% else %}
+                                            <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                <h5 class="card-title--medium">Salida</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/smp2.png' %}" class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                                </div>
+                                            </div>
+                                            {% if perms.admin.view_logentry %}
+                                            </a>
+                                            {% else %}
+                                            </button>
+                                            {% endif %}
+                                        </div>
+
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-4">
+                                    <div class="card">
+                                    <div class="card-body">
+                                        <h3 style="text-align: center;">Animales</h3>
+                                        <div class="row">
+
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            {% if perms.admin.view_logentry %}
+                                            <a href="{% url 'reporte:R_Movimientos_Animales' %}">
+                                            {% else %}
+                                            <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body cardcatalogob">
+                                                <h5 class="card-title--medium">Movimiento</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/mov3.png' %}" class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                                </div>
+                                            </div>
+                                            {% if perms.admin.view_logentry %}
+                                            </a>
+                                            {% else %}
+                                            </button>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            {% if perms.admin.view_logentry %}
+                                            <a href="{% url 'reporte:R_Animales_Clientes' %}">
+                                            {% else %}
+                                            <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                <h5 class="card-title--medium">Cliente</h5>
+                                                <hr>
+                                                <img src="{% static 'images/catalogos/cliente.png' %}" class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
+                                                <hr>
+                                                </div>
+                                            </div>
+                                            {% if perms.admin.view_logentry %}
+                                            </a>
+                                            {% else %}
+                                            </button>
+                                            {% endif %}
+                                        </div>
+
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-3">
+            <hr>
+            <hr class="mb-5">
+            <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;" id="Usuarios">
+                <div class="card">
+                    <div class="card-header d-block d-sm-flex border-0">
+                        <div style="display: flex; justify-content: center; align-items: center; ">
+                            <h2>USUARIOS</h2>
+                        </div>
+                    </div>
+
+                    <div class="card-body tab-content p-0">
+                        <div class="tab-pane active show fade" id="monthly" role="tabpanel">
+                            <div class="row px-4">
+                                {% for item in usuarios_con_grupo %}
+                                {% for grupo in item.grupos %}
+                                <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-4">
+                                    <div class="flip-card"> <!-- sigue usando "card" -->
+                                        <div class="flip-corner-indicator top-left"></div>
+                                        <div class="flip-card-inner">
+                                            <div class="flip-card-front">
+                                                <p class="role-label">{{ grupo.name }}</p>
+
+                                                <div class="profile-img-container {% if item.usuario.last_login %}logueado{% else %}no-logueado{% endif %}">
+                                                    <img src="{% static 'images/catalogos/perfil.png' %}" alt="Perfil" class="profile-img">
+                                                </div>
+
+                                                <p class="user-name">{{ item.usuario.first_name }}
+                                                    {{ item.usuario.last_name }}</p>
+                                                <p class="user-email">{{ item.usuario.username }}</p>
+
+                                                {% if perms.Aplicacion.change_tbltecnicos %}
+                                                <a style="display: inline-block;"
+                                                    href="{% url 'usuario:E_Usuario' item.usuario.id %}">
+                                                    <button class="edit-button my-2">
+                                                        <svg class="edit-svgIcon" viewBox="0 0 512 512">
+                                                            <path
+                                                                d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z">
+                                                            </path>
+                                                        </svg>
+                                                    </button>
+                                                </a>
+                                                {% endif %}
+
+                                            </div>
+                                            <div class="flip-card-back">
+                                                <p class="label-title">Fecha de creación</p>
+                                                <p class="label-data">{{ item.usuario.date_joined }}</p>
+                                                <p class="label-title">Última conexión</p>
+                                                <p class="label-data">{{ item.usuario.last_login }}</p>
+
+                                                <div class="mt-2">
+                                                    <p class="label-title">Registro de datos</p>
+                                                    <a href="#" class="btn-action edit">Editados</a>
+                                                    <form action="/Agregar-Tecnicos/" method="POST" class="d-inline">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="usuario"
+                                                            value="{{ item.usuario.id }}">
+                                                        <input type="hidden" name="full_name"
+                                                            value="{{ item.usuario.first_name }} {{ item.usuario.last_name }}">
+                                                        <button type="submit" class="btn-action add">Agregados</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    var chartBar2 = function () {
+
+      var options = {
+          series: [
+              {
+                  name: 'Cantidad de corrales',
+                  data: {{ data|safe }}
+              }
+          ],
+          chart: {
+              type: 'bar',
+              height: 400,
+              toolbar: { show: false }
+          },
+          plotOptions: {
+              bar: {
+                  horizontal: false,
+                  columnWidth: '70%',
+                  borderRadius: 10
+              }
+          },
+          colors: ['#3498db'],
+          dataLabels: { enabled: false },
+          xaxis: {
+              categories: {{ labels|safe }},
+              labels: {
+                  style: {
+                      colors: '#3e4954',
+                      fontSize: '13px',
+                      fontFamily: 'poppins',
+                      fontWeight: 400,
+                      cssClass: 'apexcharts-xaxis-label',
+                  },
+              },
+              crosshairs: { show: false }
+          },
+          yaxis: {
+              labels: {
+                  offsetX: -16,
+                  style: {
+                      colors: '#3e4954',
+                      fontSize: '13px',
+                      fontFamily: 'poppins',
+                      fontWeight: 400,
+                      cssClass: 'apexcharts-xaxis-label',
+                  },
+              },
+          },
+          fill: {
+              opacity: 1,
+              colors: ['#3498db'],
+          },
+          tooltip: {
+              y: {
+                  formatter: function (val) {
+                      return val + " corrales"
+                  }
+              }
+          },
+          responsive: [{
+              breakpoint: 575,
+              options: {
+                  chart: { height: 250 }
+              }
+          }]
+      };
+
+      var chartBar1 = new ApexCharts(document.querySelector("#chartBar10"), options);
+      chartBar1.render();
+  }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        chartBar2();
+    });
+</script>
+<script>
+    document.querySelectorAll('.flip-card').forEach(card => {
+        const indicator = card.querySelector('.flip-corner-indicator');
+
+        indicator.addEventListener('mouseenter', () => {
+            card.classList.add('flipped');
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.classList.remove('flipped');
+        });
+    });
+</script>
+
+{% endblock %}

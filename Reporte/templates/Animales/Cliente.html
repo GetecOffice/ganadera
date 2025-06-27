@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}CLIENTE{% endblock %}
+{% block body %}
+<!--**********************************
+            Content body start
+        ***********************************-->
+{% block head %}CATALOGO{% endblock %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row" style="padding-right: 0 !important;">
+            <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;">
+                <div class="card">
+                    <div class="card-header d-block d-sm-flex border-0">
+                        <div class="row">
+                            <div class="col-sm-10 col-md-10 col-lg-10">
+                                <div class="me-3">
+                                    <h4 class="card-title mb-2">Recolección de datos, linea de producción: tostador
+                                    </h4>
+                                    <span class="fs-12">En la siguiente tabla se mostrara los datos recolectados del
+                                        PLC instalados en cada linea de producción. Los datos de la siguiente tabla se
+                                        actualizan automaticamente cada 5 segundos</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-lg-2 d-flex justify-content-end">
+                                <a href="{% url 'catalogo:F_ContenedorMP'%}">
+                                    <button class="c-button ml-5">
+                                        <span class="c-main">
+                                            <span class="c-ico"><span class="c-blur"></span> <span
+                                                    class="ico-text">+</span></span>
+                                            Agregar
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row px-4">
+                        <h5 class="h6-form">Filtrar datos de movimientos de animales</h5>
+                        <div class="col-10">
+                            <form action="{% url 'reporte:R_Animales_Clientes' %}" class="pr-5 pl-5" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-sm-8 col-xl-8">
+                                            <select name="cliente" class="select2" style="width: 100%;" required
+                                                onchange="ocultarPDF()">
+                                                {% if Nombre is none %}
+                                                {% else %}
+                                                <option value="{{ Cliente }}">
+                                                    -------{{Nombre}}-------
+                                                </option>
+                                                {% endif %}
+                                                <option value="todos">Traer todos los clientes</option>
+                                                {% for clientes in FClientes%}
+                                                <option value="{{ clientes.ID }}">
+                                                    {{ clientes.Nombre }}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-sm-3 col-xl-3 p-0 m-0">
+                                            {% if Fecha is none %}
+                                            <input type="date" name="fecha1" class="form-control"
+                                                style=" border-radius: 0;" value="{{FechaDeHoy}}">
+                                            {% else %}
+                                            <input type="date" name="fecha1" class="form-control"
+                                                style=" border-radius: 0;" value="{{Fecha}}">
+                                            {% endif %}
+
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-sm-1 col-xl-1 p-0 m-0">
+                                            <button type="submit" class="btn button-add" name="reportes"
+                                                style="padding: 5px 14px 7px 14px; border-radius: 1px 7px 7px 1px;">Buscar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-2">
+                            <form action="/Descarga_PDF_Reporte_Movimientos_Animales_Cliente/" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{ Cliente }}" name="cliente">
+                                <input type="hidden" value="{{Fecha}}" name="fechaInicial">
+                                <input type="hidden" value="{{Fecha2}}" name="fechaFinal">
+                                <input type="hidden" value="0" name="reporte-movimiento-animales-cliente">
+                                <button class="pdf-red-button" type="submit" style="float: inline-end;"
+                                    id="pdf"></button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card-body tab-content p-0">
+                        <div class="tab-pane active show fade" id="monthly" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table table-responsive-md card-table transactions-table" id="miTabla">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-black fs-16 font-w600 th-responsive" colspan="2">
+                                                CLIENTE
+                                            </th>
+                                            <th class="text-black fs-16 font-w600 th-responsive">
+                                                CORRAL
+                                            </th>
+                                            <th class="text-black fs-16 font-w600 th-responsive">
+                                                INICIAL
+                                            </th>
+                                            <th class="text-black fs-16 font-w600 th-responsive">
+                                                ENTRADA
+                                            </th>
+                                            <th class="text-black fs-16 font-w600 th-responsive">
+                                                SÁLIDA
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for Dato in reportes %}
+                                        <tr>
+                                            <td colspan="2">
+                                                <span class="fs-16 text-black font-w400">
+                                                    {{Dato.0}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="fs-16 text-black font-w400">
+                                                    {{Dato.1}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="fs-16 text-black font-w400">
+                                                    {{Dato.2}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="fs-16 text-black font-w400">
+                                                    {{Dato.3}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="fs-16 text-black font-w400">
+                                                    {{Dato.4}}
+                                                </span>
+                                            </td>
+
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var nombre = "{{Nombre}}";
+
+    if (nombre == "Buscar cliente")
+        window.onload = ocultarPDF();
+
+    function ocultarPDF() {
+        document.getElementById("pdf").style.display = "None"
+    }
+</script>
+{% endblock %}

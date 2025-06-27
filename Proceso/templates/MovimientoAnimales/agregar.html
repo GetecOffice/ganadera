@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}CLIENTE{% endblock %}
+{% block body %}
+<!--**********************************
+            Content body start
+        ***********************************-->
+{% block head %}CATALOGO{% endblock %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row" style="padding-right: 0 !important;">
+            <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;">
+                <div class="card">
+
+                    <div class="card-header d-block d-sm-flex border-0">
+                        <div class="me-3">
+
+                            <h4 class="card-title mb-2">
+                                <a href="{% url 'catalogo:T_Cliente'%}">
+                                    <i class="bi bi-arrow-left-circle text-black fs-28"></i>
+                                </a>
+                                Recolección de datos, linea de producción:
+                                tostador
+                            </h4>
+                            <span class="fs-12">En la siguiente tabla se mostrara los datos recolectados del
+                                PLC instalados en cada linea de producción. Los datos de la siguiente tabla se
+                                actualizan automaticamente cada 5 segundos</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-body tab-content px-4 pt-2">
+                        <div class="tab-pane active show fade" id="monthly" role="tabpanel">
+                            <form action="{% url 'proceso:G_Mov_De_Animales'%}" method="POST" autocomplete="off">
+                                {% csrf_token %}
+                                <input type="hidden" class="form-control" name="clave" value="{{AgMovimientos.ID}}">
+                                <input type="hidden" class="form-control" name="tecnico"
+                                    value="{{ user.first_name }} {{user.last_name}}">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3" style="text-align: center;">
+                                        <h6 class="h6-form">CLIENTE:</h6>
+                                        <h4> {{ FiltradoCliente.Nombre }}</h4>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3" style="text-align: center;">
+                                        <h6 class="h6-form">MOVIMIENTO:</h6>
+                                        <h4>{{ FiltradoMovimiento.Descripcion }}</h4>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3" style="text-align: center;">
+                                        <h6 class="h6-form">FECHA</h6>
+                                        <h4>{{AgMovimientos.Fecha}}</h4>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3" style="text-align: center;">
+                                        <h6 class="h6-form">PESO POR LOTE:</h6>
+                                        <input type="hidden" value="{{AgMovimientos.Peso}}" name="peso">
+                                        <h4> {{AgMovimientos.Peso}}</h4>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">CORRAL *</h6>
+                                        <select class="select2 form-control col-12" name="corral" required
+                                            id="select-corral">
+                                            <option value="">Selecciona corral</option>
+                                            {% for Corral in FiltradoCorral %}
+                                            <option value="{{ Corral.ID }}">{{ Corral.Descripcion }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">TIPO ANIMAL *</h6>
+                                        <select class="select2 form-control" style="width: 100%;" name="animal"
+                                            required>
+                                            <option value="">Selecciona animal</option>
+                                            {% for TipoAnimal in FTipoAnimal %}
+                                            <option value="{{ TipoAnimal.ID }}">{{ TipoAnimal.Descripcion }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">CANTIDAD ANIMAL*</h6>
+                                        <input type="text" name="cantidad" autofocus class="form-control"
+                                            placeholder="Ingrese la cantidad" required step="1"
+                                            oninput="checkInputValidity(this, 'partidaErrorMessage', 'agregarBoton', 'salirBoton')">
+                                        <div class="invalid-feedback" id="partidaErrorMessage" style="display: none;">
+                                            No se permiten puntos decimales.
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">PESO TOTAL*</h6>
+                                        <input type="text" name="pesoTotal" class="form-control" value="0"
+                                            placeholder="Ingrese el peso" required step="1">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary agregarBoton" name="agregar"
+                                        id="agregarBoton">Guardar
+                                        y agregar otro</button>
+                                    <button type="submit" class="btn btn-success salirBoton" name="salir"
+                                        id="salirBoton">Guardar y
+                                        salir</button>
+                                    <a href="{% url 'proceso:T_MovAnimales'%}">
+                                        <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
+                                    </a>
+                                </div>
+                            </form>
+                            <hr class="my-4">
+                            <div class="tab-pane active show fade" id="monthly" role="tabpanel">
+                                <div class="table-responsive">
+                                    <table class="table table-responsive-md card-table transactions-table" id="miTabla">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-black fs-16 font-w600 th-responsive">
+                                                    Folio
+                                                </th>
+                                                <th class="text-black fs-16 font-w600 th-responsive">
+                                                    Corral
+                                                </th>
+                                                <th class="text-black fs-16 font-w600 th-responsive">
+                                                    Animal
+                                                </th>
+                                                <th class="text-black fs-16 font-w600 th-responsive">
+                                                    Cantidad
+                                                </th>
+                                                <th class="text-black fs-16 font-w600 th-responsive">
+                                                    Peso promedio
+                                                </th>
+                                                <th class="text-black fs-16 font-w600 th-responsive">
+                                                    Peso total
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for Dato in Detalle %}
+                                            <tr>
+                                                <td>
+                                                    <span class="fs-16 text-black font-w400">
+                                                        {{Dato.IDFolio}}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="fs-16 text-black font-w400">
+                                                        {{Dato.IDCorral_id__Descripcion}}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="fs-16 text-black font-w400">
+                                                        {{Dato.IDAnimales_id__Descripcion}}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="fs-16 text-black font-w400">
+                                                        {{Dato.Cantidad}}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="fs-16 text-black font-w400">
+                                                        {{Dato.PesoPromedio}}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="fs-16 text-black font-w400">
+                                                        {{Dato.PesoTotal}}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

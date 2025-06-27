@@ -1,0 +1,19 @@
+{% load static %}
+<!-- Modal -->
+<div class="modal fade" id="sinPermisos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">No autorizado</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="justify-content: center; align-items: center; text-align: center;">
+                <h4>LO SENTIMOS, NO CUENTAS CON LOS PERMISOS NECESARIOS PARA INGRESAR A ESTE APARTADO</h4>
+                <img src="{% static 'images/catalogos/sinAcceso.jpg' %}" width="50%">
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">CERRAR</button>
+            </div> -->
+        </div>
+    </div>
+</div>

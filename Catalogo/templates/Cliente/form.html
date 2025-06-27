@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}CLIENTE{% endblock %}
+{% block body %}
+<!--**********************************
+            Content body start
+        ***********************************-->
+{% block head %}CATALOGO{% endblock %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row" style="padding-right: 0 !important;">
+            <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;">
+                <div class="card">
+
+                    <div class="card-header d-block d-sm-flex border-0">
+                        <div class="me-3">
+
+                            <h4 class="card-title mb-2">
+                                <a href="{% url 'catalogo:T_Cliente'%}">
+                                    <i class="bi bi-arrow-left-circle text-black fs-28"></i>
+                                </a>
+                                Recolección de datos, linea de producción:
+                                tostador
+                            </h4>
+                            <span class="fs-12">En la siguiente tabla se mostrara los datos recolectados del
+                                PLC instalados en cada linea de producción. Los datos de la siguiente tabla se
+                                actualizan automaticamente cada 5 segundos</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-body tab-content px-4 pt-2">
+                        <div class="tab-pane active show fade" id="monthly" role="tabpanel">
+                            <form action="{% url 'catalogo:G_Cliente' %}" method="POST" autocomplete="off">
+                                {% csrf_token %}
+
+                                {% if clave is not None %}
+                                <input type="hidden" class=" form-control" name="clave" value="{{ clave }}">
+                                {% else %}
+                                <input type="hidden" class=" form-control" name="clave" value="{{ ultimo_folio }}">
+                                {% endif %}
+                                <input type="hidden" class=" form-control" name="tecnico"
+                                    value="{{ user.first_name }} {{user.last_name}}">
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">NOMBRE *</h6>
+                                        {% if errorCliente is not None %}
+                                        <input type="text" autofocus name="nombre" class=" form-control is-invalid"
+                                            placeholder="Ingrese el nombre (obligatorio)" required>
+                                        <div class="invalid-feedback ">
+                                            El nombre ya se registro anteriormente
+                                        </div>
+                                        {% else %}
+                                        {% if nombre is not None %}
+                                        <input type="text" autofocus name="nombre" class=" form-control"
+                                            placeholder="Ingrese el nombre (obligatorio)" value="{{nombre}}" required>
+                                        {% else %}
+                                        <input type="text" autofocus name="nombre" class=" form-control"
+                                            placeholder="Ingrese el nombre (obligatorio)" required>
+                                        {% endif %}
+                                        {% endif %}
+                                    </div>
+                                    <br>
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">CONTACTO</h6>
+                                        {% if contacto is not None %}
+                                        <input type="text" name="contacto" class=" form-control"
+                                            placeholder="Ingrese el contacto" value="{{ contacto }}">
+                                        {% else %}
+                                        <input type="text" name="contacto" class=" form-control"
+                                            placeholder="Ingrese el contacto">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">DIRECCIÓN</h6>
+                                        {% if direccion is not None %}
+                                        <input type="text" name="direccion" class=" form-control"
+                                            placeholder="Ingrese la dirección" value="{{ direccion }}">
+                                        {% else %}
+                                        <input type="text" name="direccion" class=" form-control"
+                                            placeholder="Ingrese la dirección">
+                                        {% endif %}
+                                    </div>
+                                    <br>
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">CIUDAD</h6>
+                                        {% if ciudad is not None %}
+                                        <input type="text" name="ciudad" class=" form-control"
+                                            placeholder="Ingrese la ciudad" value="{{ciudad}}">
+                                        {% else %}
+                                        <input type="text" name="ciudad" class=" form-control"
+                                            placeholder="Ingrese la ciudad">
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">EMAIL</h6>
+                                        {% if email is not None %}
+                                        <input type="email" name="email" class=" form-control"
+                                            placeholder="Ingrese el email" value="{{email}}">
+                                        {% else %}
+                                        <input type="email" name="email" class=" form-control"
+                                            placeholder="Ingrese el email">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">RFC</h6>
+                                        {% if rfc is not None %}
+                                        <input type="text" name="rfc" class=" form-control" placeholder="Ingrese el RFC"
+                                            value="{{rfc}}">
+                                        {% else %}
+                                        <input type="text" name="rfc" class=" form-control"
+                                            placeholder="Ingrese el RFC">
+                                        {% endif %}
+                                    </div>
+                                    <br>
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">TELÉFONO</h6>
+                                        {% if numero is not None %}
+                                        <input type="number" name="numero" class=" form-control"
+                                            placeholder="Ingrese el número telefonico" value="{{numero}}" step="1"
+                                            oninput="checkInputValidity(this, 'telefonoErrorMessage', 'agregarBoton', 'salirBoton')">
+                                        <div class="invalid-feedback" id="telefonoErrorMessage" style="display: none;">
+                                            No se permiten puntos decimales.
+                                        </div>
+                                        {% else %}
+                                        <input type="number" name="numero" class=" form-control"
+                                            placeholder="Ingrese el número telefonico" step="1"
+                                            oninput="checkInputValidity(this, 'telefonoErrorMessage', 'agregarBoton', 'salirBoton')">
+                                        <div class="invalid-feedback" id="telefonoErrorMessage" style="display: none;">
+                                            No se permiten puntos decimales.
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="form-group my-4">
+                                    <button type="submit" class="btn btn-primary agregarBoton" name="agregar"
+                                        id="agregarBoton">Guardar y
+                                        agregar otro</button>
+                                    <button type="submit" class="btn btn-success salirBoton" name="salir"
+                                        id="salirBoton">Guardar y
+                                        salir</button>
+                                    <a href="{% url 'catalogo:T_Cliente' %}">
+                                        <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function checkInputValidity(input, errorMessageId, agregarBotonId, salirBotonId) {
+        const agregarBoton = document.getElementById(agregarBotonId);
+        const salirBoton = document.getElementById(salirBotonId);
+
+        if (input.value.includes('.')) {
+            input.classList.add('is-invalid');
+            document.getElementById(errorMessageId).style.display = 'block';
+            agregarBoton.disabled = true;
+            salirBoton.disabled = true;
+        } else {
+            input.classList.remove('is-invalid');
+            document.getElementById(errorMessageId).style.display = 'none';
+            agregarBoton.disabled = false;
+            salirBoton.disabled = false;
+        }
+    }
+</script>
+
+{% endblock %}

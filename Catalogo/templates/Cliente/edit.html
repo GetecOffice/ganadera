@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}CLIENTE{% endblock %}
+{% block body %}
+<!--**********************************
+            Content body start
+        ***********************************-->
+{% block head %}CATALOGO{% endblock %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row" style="padding-right: 0 !important;">
+            <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;">
+                <div class="card">
+                    <div class="card-header d-block d-sm-flex border-0">
+                        <div class="me-3">
+                            <h4 class="card-title mb-2">
+                                <a href="{% url 'catalogo:T_Cliente'%}">
+                                    <i class="bi bi-arrow-left-circle text-black fs-28"></i>
+                                </a>
+                                EDITAR CLIENTE #{{TECliente.Clave}}
+                            </h4>
+                            <span class="fs-12">En la siguiente tabla se mostrara los datos recolectados del
+                                PLC instalados en cada linea de producción. Los datos de la siguiente tabla se
+                                actualizan automaticamente cada 5 segundos</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-body tab-content px-4 pt-2">
+                        <div class="tab-pane active show fade" id="monthly" role="tabpanel">
+                            <form action="{% url 'catalogo:A_Cliente'%}" method="POST" autocomplete="off">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="hidden" name="id" value="{{TECliente.ID}}">
+                                    <input type="hidden" name="clave" value="{{TECliente.Clave}}">
+                                    <input type="hidden" class="form-control" name="tecnico"
+                                        value="{{ user.first_name }} {{user.last_name}}">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                            <h6 class="h6-form">NOMBRE *</h6>
+                                            <input type="text" name="nombre" value="{{TECliente.Nombre}}"
+                                                class="form-control input" placeholder="Ingrese el nombre (Obligatorio)"
+                                                required>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                            <h6 class="h6-form">CONTACTO</h6>
+                                            <input type="text" name="contacto" value="{{TECliente.Contacto}}"
+                                                class="form-control input" placeholder="Ingrese el contacto">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                            <h6 class="h6-form">DIRECCIÓN</h6>
+                                            <input type="text" name="direccion" value="{{TECliente.Direccion}}"
+                                                class="form-control input" placeholder="Ingrese la direccion">
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                            <h6 class="h6-form">CIUDAD</h6>
+                                            <input type="text" name="ciudad" value="{{TECliente.Ciudad}}"
+                                                class="form-control input" placeholder="Ingrese la ciudad">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                            <h6 class="h6-form">RFC</h6>
+                                            <input type="text" name="rfc" value="{{TECliente.RFC}}"
+                                                class="form-control input" placeholder="Ingrese el RFC">
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                            <h6 class="h6-form">EMAIL</h6>
+                                            <input type="text" name="email" value="{{TECliente.Email}}"
+                                                class="form-control input" placeholder="Ingrese el email">
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                            <h6 class="h6-form">TELÉFONO</h6>
+                                            <input type="text" name="telefono" value="{{TECliente.TelefonoContacto}}"
+                                                class="form-control input" placeholder="Ingrese el número teléfonico"
+                                                step="1"
+                                                oninput="checkInputValidity(this, 'telefonoErrorMessage', 'agregarBoton', 'salirBoton')">
+                                            <div class="invalid-feedback" id="telefonoErrorMessage"
+                                                style="display: none;">
+                                                No se permiten puntos decimales.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-success"
+                                            id="agregarBoton">Actualizar</button>
+                                        <a href="{% url 'catalogo:T_Cliente'%}" class="btn btn-danger">Cancelar</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

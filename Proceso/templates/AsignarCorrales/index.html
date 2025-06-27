@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}CLIENTE{% endblock %}
+{% block body %}
+<!--**********************************
+            Content body start
+        ***********************************-->
+{% block head %}CATALOGO{% endblock %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row" style="padding-right: 0 !important;">
+            <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;">
+                <div class="card">
+                    <div class="card-header d-block d-sm-flex border-0">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="me-3">
+                                    <h4 class="card-title mb-2">Recolección de datos, linea de producción: tostador
+                                    </h4>
+                                    <span class="fs-12">En la siguiente tabla se mostrara los datos recolectados del
+                                        PLC instalados en cada linea de producción. Los datos de la siguiente tabla se
+                                        actualizan automaticamente cada 5 segundos</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="row mt-3">
+                                    <div class="col-sm-12 col-md-9 col-lg-9 ">
+                                        <form action="{% url 'proceso:T_Asignacion'%}" class="pr-5 pl-5" method="POST">
+                                            {% csrf_token %}
+                                            <div class="form-group" style="justify-content: center; display: flex;">
+                                                <select name="cliente" class="select2" style="width: 50%; ">
+                                                    {% if clientePost.0.Nombre %}
+                                                    <option value="{{ clientePost.0.ClienteID }}">
+                                                        --------------{{ clientePost.0.Nombre }}--------------
+                                                        {% endif %}
+                                                    </option>
+                                                    {% for Clientes in FClientes%}
+                                                    <option value="{{ Clientes.ID}}">{{Clientes.Nombre}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <button type="submit" class="btn button-add"
+                                                    style="padding: 1px 14px 1px 14px; border-radius: 1px 7px 7px 1px;">Buscar</button>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-12 col-md-3 col-lg-3">
+                                        <a class="c-button ml-5" href="{% url 'proceso:T_Historial'%}">
+                                            <span class="c-main">
+                                                <span class="c-ico"><span class="c-blur"></span> <span
+                                                        class="ico-text">+</span></span>
+                                                Ver Historial
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="card-body tab-content p-0">
+                        <div class="tab-pane active show fade" id="monthly" role="tabpanel">
+                            {% if clientePost.0.Nombre %}
+                            <div class="table-responsive">
+                                <div style="float: left; width: 50%;">
+                                    <form action="{% url 'proceso:T_Asignacion'%}" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm col-12 mb-3"
+                                            style="padding: 7px 14px 7px 14px;">
+                                            LIBERAR CORRALES SELECCIONADOS
+                                        </button>
+                                        <table class="table table-responsive-md card-table transactions-table"
+                                            id="miTabla">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-black fs-16 font-w600 th-responsive">
+                                                        CLAVE
+                                                    </th>
+                                                    <th class="text-black fs-16 font-w600 th-responsive">
+                                                        MARCA
+                                                    </th>
+                                                    <th class="text-black fs-16 font-w600 th-responsive">
+                                                        MODELO
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for Dato in TClienteCorrales %}
+                                                <tr>
+                                                    <td>
+                                                        <span class="fs-16 text-black font-w400">
+                                                            {{Dato.Descripcion}}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="fs-16 text-black font-w400">
+                                                            {{Dato.IDCliente_id__Nombre}}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        {% csrf_token %}
+
+                                                        <h6 style="display: none;">CLIENTE SELECCIONADO</h6>
+                                                        <input type="hidden" value="{{ clientePost.0.ClienteID }}"
+                                                            name="cliente">
+                                                        <h6 style="display: none;">CAPACIDAD </h6>
+                                                        <input type="hidden" value="0" name="capacidad">
+                                                        <h6 style="display: none;">LIBERAR</h6>
+                                                        <input type="hidden" value="1" name="liberar">
+                                                        <h6 style="display: none;">CLIETNE A LIBERAR</h6>
+                                                        <input type="hidden" value="{{ Dato.IDCliente_id}}"
+                                                            name="IDCliente">
+                                                        <h6 style="display: none;">CORRAL</h6>
+                                                        <input type="hidden" value="{{Dato.Descripcion}}" name="corral">
+                                                        <h6 style="display: none;">ID corral</h6>
+                                                        <input class="form-check-input" type="checkbox"
+                                                            value="{{ Dato.ID}}" id="defaultCheck1" name="ID"
+                                                            style="border: 1px black solid; font-size: 20px;">
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                                <div style="float: right; width: 49%;">
+                                    <form action="{% url 'proceso:T_Asignacion'%}" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-success btn-sm col-12 mb-3"
+                                            style="padding: 7px 14px 7px 14px;">ASIGNAR CORRALES
+                                            SELECCIONADOS</button>
+                                        <table class="table table-responsive-md card-table transactions-table"
+                                            id="miTabla">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-black fs-16 font-w600 th-responsive">
+                                                        ASIGNAR
+                                                    </th>
+                                                    <th class="text-black fs-16 font-w600 th-responsive">
+                                                        CLAVE
+                                                    </th>
+                                                    <th class="text-black fs-16 font-w600 th-responsive">
+                                                        CLIENTE
+                                                    </th>
+                                                    <th class="text-black fs-16 font-w600 th-responsive">
+                                                        CORRAL
+                                                    </th>
+                                                    <th class="text-black fs-16 font-w600 th-responsive">
+                                                        STATUS
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for Dato in TCorralesLibres %}
+                                                <tr>
+                                                    <td>
+                                                        {% csrf_token %}
+                                                        <h6 style="display: none;">ID CORRAL</h6>
+                                                        <input class="form-check-input btn-lg" type="checkbox"
+                                                            value="{{ Dato.ID}}" id="defaultCheck1" name="ID"
+                                                            style="border: 1px black solid; font-size: 20px;">
+                                                        <h6 style="display: none;">ASIGNAR</h6>
+                                                        <input type="hidden" value="1" name="asignar">
+                                                        <h6 style="display: none;">CLIENTE SELECCIONADO</h6>
+                                                        <input type="hidden" value="{{ clientePost.0.ClienteID }}"
+                                                            name="cliente">
+                                                        <h6 style="display: none;">CORRAL</h6>
+                                                        <input type="hidden" value="{{Dato.Descripcion}}" name="corral">
+
+                                                    </td>
+                                                    <td>
+                                                        <span class="fs-16 text-black font-w400">
+                                                            {{Dato.Clave}}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="fs-16 text-black font-w400">
+                                                            {{Dato.IDCliente_id__Nombre}}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="fs-16 text-black font-w400">
+                                                            {{Dato.Descripcion}}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="fs-16 text-black font-w400">
+                                                            {{Dato.IDEstatus_id__Descripcion}}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="row centrar pt-4">
+                                <h6 style="color: red; text-transform: uppercase; text-align: center;" class="h6-form">
+                                    Para poder asignar o liberar corrales, debe seleccionar primeramente un
+                                    cliente</h6>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

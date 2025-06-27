@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}CLIENTE{% endblock %}
+{% block body %}
+<!--**********************************
+            Content body start
+        ***********************************-->
+{% block head %}CATALOGO{% endblock %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row" style="padding-right: 0 !important;">
+            <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;">
+                <div class="card">
+
+                    <div class="card-header d-block d-sm-flex border-0">
+                        <div class="me-3">
+
+                            <h4 class="card-title mb-2">
+                                <a href="{% url 'proceso:T_Ent_Materia_Prima'%}">
+                                    <i class="bi bi-arrow-left-circle text-black fs-28"></i>
+                                </a>
+                                Recolección de datos, linea de producción:
+                                tostador
+                            </h4>
+                            <span class="fs-12">En la siguiente tabla se mostrara los datos recolectados del
+                                PLC instalados en cada linea de producción. Los datos de la siguiente tabla se
+                                actualizan automaticamente cada 5 segundos</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-body tab-content px-4 pt-2">
+                        <div class="tab-pane active show fade" id="monthly" role="tabpanel">
+                            <form action="{% url 'proceso:G_Entrada_Materia_Prima' %}" method="POST" autocomplete="off">
+                                {% csrf_token %}
+                                {% if clave is not None %}
+                                <input type="hidden" class="form-control" name="clave" value="{{ clave }}">
+                                {% else %}
+                                <input type="hidden" class="form-control" name="clave" value="{{ ultimo_folio }}">
+                                {% endif %}
+
+                                <input type="hidden" class="form-control" name="tecnico"
+                                    value="{{ user.first_name }} {{user.last_name}}">
+                                <div class="centrar"
+                                    style="justify-content: center; display: flex; text-align: center; width: 100%;">
+                                    <div class="accordion">
+                                        <div class="card card-hdr-procesos">
+                                            <div class="card-header">
+                                                <div class="accordion-item col-12">
+                                                    <input type="checkbox" id="uno" class="accordion-checkbox">
+                                                    <label for="uno" class="accordion-title"
+                                                        style="justify-content: center; text-align: center; background-color:rgb(0, 38, 255)"><strong>Pulse
+                                                            para agregar transporte</strong></label>
+                                                    <div class="accordion-content card-hdr">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                                                <h6 class="h6-form">CHOFER</h6>
+                                                                {% if chofer is not None %}
+                                                                <input type="text" name="chofer" class="form-control"
+                                                                    placeholder="Ingrese el chofer" value="{{chofer}}">
+                                                                {% else %}
+                                                                <input type="text" name="chofer" class="form-control"
+                                                                    placeholder="Ingrese el chofer">
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                                                <h6 class="h6-form">PESADOR</h6>
+                                                                <input type="hidden" value="{{ user.id }}"
+                                                                    name="operador">
+                                                                <input type=" text"
+                                                                    value="{{ user.first_name }} {{user.last_name }}"
+                                                                    class="form-control input" readonly>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                                                <h6 class="h6-form">CAMIÓN</h6>
+                                                                {% if camion is not None %}
+                                                                <input type="text" name="camion" class="form-control"
+                                                                    placeholder="Ingrese el camión" value="{{camion}}">
+                                                                {% else %}
+                                                                <input type="text" name="camion" class="form-control"
+                                                                    placeholder="Ingrese el camión">
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                                                <h6 class="h6-form">PLACAS</h6>
+                                                                {% if placas is not None %}
+                                                                <input type="text" name="placas" class="form-control"
+                                                                    placeholder="Ingrese las placas" value="{{placas}}">
+                                                                {% else %}
+                                                                <input type="text" name="placas" class="form-control"
+                                                                    placeholder="Ingrese las placas">
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                                                <h6 class="h6-form">COSTO</h6>
+                                                                {% if costo is not None %}
+                                                                <input type="number" name="costo" class="form-control"
+                                                                    placeholder="Ingrese el costo" step="0.01"
+                                                                    value="{{costo}}">
+                                                                {% else %}
+                                                                <input type="number" name="costo" class="form-control"
+                                                                    placeholder="Ingrese el costo" step="0.01">
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                                                <h6 class="h6-form">FLETE</h6>
+                                                                {% if flete is not None %}
+                                                                <input type="number" name="flete" class="form-control"
+                                                                    placeholder="Ingrese el flete" step="0.01"
+                                                                    value="{{flete}}">
+                                                                {% else %}
+                                                                <input type="number" name="flete" class="form-control"
+                                                                    placeholder="Ingrese el flete" step="0.01">
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                                                <h6 class="h6-form">MANIOBRA</h6>
+                                                                {% if maniobra is not None %}
+                                                                <input type="number" name="maniobra"
+                                                                    class="form-control"
+                                                                    placeholder="Ingrese la maniobra" step="0.01"
+                                                                    value="{{maniobra}}">
+                                                                {% else %}
+                                                                <input type="number" name="maniobra"
+                                                                    class="form-control"
+                                                                    placeholder="Ingrese la maniobra" step="0.01">
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">PROVEEDOR *</h6>
+                                        <select class="select2 form-control col-12" name="proveedor" required>
+                                            {% if proveedor is not None %}
+                                            <option value="{{proveedor.ID}}">
+                                                --------{{proveedor.Nombre}}--------
+                                            </option>
+                                            {% endif %}
+                                            {% for Proveedor in FProveedor %}
+                                            <option value="{{ Proveedor.ID }}">{{ Proveedor.Nombre }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">ALMACEN *</h6>
+                                        <select class="select2 form-control col-12" name="almacen" required>
+                                            {% if almacen is not None %}
+                                            <option value="{{almacen.ID}}">
+                                                --------{{ almacen.Cliente }}--------
+                                            </option>
+                                            {% endif %}
+                                            {% for Almacen in FAlmacen%}
+                                            <option value="{{ Almacen.ID }}">{{ Almacen.Cliente }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">PRESENTACIÓN *</h6>
+                                        <select class="select2 form-control col-12" name="presentacion" required>
+                                            {% if presentacion is not None %}
+                                            <option value="{{presentacion.ID}}">
+                                                --------{{presentacion.Descripcion}}--------
+                                            </option>
+                                            {% endif %}
+                                            {% for Presentacion in FPresentacion %}
+                                            <option value="{{ Presentacion.ID }}">{{ Presentacion.Descripcion }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">MATERIA PRIMA *</h6>
+                                        <select class="select2 form-control col-12" name="materiaPrima" required>
+                                            {% if materiaprima is not None %}
+                                            <option value="{{materiaprima.ID}}">
+                                                --------{{materiaprima.Descripcion}}--------
+                                            </option>
+                                            {% endif %}
+                                            {% for MateriaPrima in FMateriaPrima %}
+                                            <option value="{{ MateriaPrima.ID }}">{{ MateriaPrima.Descripcion }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">CANTIDAD *</h6>
+                                        <input type="number" step="0.01" name="cantidad" class="form-control"
+                                            placeholder="Ingrese la cantidad (obligatorio)" required>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">REFERENCIA</h6>
+                                        <input type="number" id="referenciaInput" name="referencia" class="form-control"
+                                            placeholder="Ingrese la referencia" step="1"
+                                            oninput="checkInputValidity(this, 'referenciaErrorMessage', 'agregarBoton', 'salirBoton')">
+                                        <div class="invalid-feedback" id="referenciaErrorMessage"
+                                            style="display: none;">
+                                            No se permiten puntos decimales.
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        {% if perms.Aplicacion.add_user %}
+                                        <h6 class="h6-form">FECHA MANUAL *</h6>
+                                        <input type="datetime-local" name="fecha" value="{{FechaDeHoy}}"
+                                            class="form-control" required>
+                                        {% else %}
+                                        <h6 class="h6-form">FECHA AUTOMATICA *</h6>
+                                        <input type="datetime-local" name="fecha" value="{{FechaDeHoy}}"
+                                            class="form-control" required readonly>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg col-xl mb-3">
+                                        <h6 class="h6-form">NOTAS</h6>
+                                        <input type="text" name="notas" class="form-control"
+                                            placeholder="Ingrese las notas">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary agregarBoton" name="agregar"
+                                        id="agregarBoton">Guardar
+                                        y
+                                        agregar otro</button>
+                                    <button type="submit" class="btn btn-success salirBoton" name="salir"
+                                        id="salirBoton">Guardar y
+                                        salir</button>
+                                    <a href="{% url 'proceso:T_Ent_Materia_Prima'%}">
+                                        <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
