@@ -157,7 +157,7 @@
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left">
                             <div class="dashboard_bar">
-                                {% block head %}{% endblock %}
+                               MENÚ
                             </div>
                         </div>
                         <ul class="navbar-nav header-right">
@@ -207,8 +207,8 @@
                         <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
                             <img src="{% static 'images/ion/man (1).png' %}" width="20" alt="" />
                             <div class="header-info ms-3">
-                                <span class="font-w600 ">Hi,<b>AC</b></span>
-                                <small class="text-end font-w400">luis@gmail.com</small>
+                                <span class="font-w600 center">Hola, <b> {{user.first_name}}<br>{{user.last_name}}</b></span>
+                                <small class="text-end font-w400">{{user.username}}</small>
                             </div>
                         </a>
 

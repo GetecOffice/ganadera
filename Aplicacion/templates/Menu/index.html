@@ -79,25 +79,29 @@
 
     /* Imagen de perfil */
     .profile-img-container {
-    display: inline-block;
-    border-radius: 50%;
-    padding: 0px; /* espacio para el borde */
+        display: inline-block;
+        border-radius: 50%;
+        padding: 0px;
+        /* espacio para el borde */
     }
 
     .profile-img-container.logueado {
-    border: 3px solid rgba(76, 175, 80, 0.5); /* verde claro semitransparente */
+        border: 3px solid rgba(76, 175, 80, 0.5);
+        /* verde claro semitransparente */
     }
 
     .profile-img-container.no-logueado {
-    border: 3px solid rgba(244, 67, 54, 0.5); /* rojo claro semitransparente */
+        border: 3px solid rgba(244, 67, 54, 0.5);
+        /* rojo claro semitransparente */
     }
 
     .profile-img {
-    border-radius: 50%;
-    display: block;
-    width: 80px; /* ajusta tamaño como necesites */
-    height: 80px;
-    object-fit: cover;
+        border-radius: 50%;
+        display: block;
+        width: 80px;
+        /* ajusta tamaño como necesites */
+        height: 80px;
+        object-fit: cover;
     }
 
     /* Tipografía */
@@ -176,20 +180,24 @@
         background-color: #eee;
         width: 100%;
     }
-    .imagen-desvanecida {
-        opacity: 0.4;          /* Hace la imagen semi-transparente */
-        filter: grayscale(100%); /* Opcional: la vuelve en escala de grises */
-        pointer-events: none;  /* Opcional: evita que se pueda clicar */
-    }
-   img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    max-height: 120px;
-    display: block;
-    margin: 0 auto;
-}
 
+    .imagen-desvanecida {
+        opacity: 0.4;
+        /* Hace la imagen semi-transparente */
+        filter: grayscale(100%);
+        /* Opcional: la vuelve en escala de grises */
+        pointer-events: none;
+        /* Opcional: evita que se pueda clicar */
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        max-height: 120px;
+        display: block;
+        margin: 0 auto;
+    }
 </style>
 {% include "Modal/index.html" %}
 <div class="content-body">
@@ -462,20 +470,20 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tblclientes or perms.Aplicacion.view_tblclientes %}
                                     <a href="{% url 'catalogo:T_Cliente' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body cardcatalogob">
-                                                <h5 class="card-title--medium">Clientes<br></h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/cliente.png' %}"
-                                                    class="imagen-catalogo {% if not perms.Aplicacion.add_tblclientes and not perms.Aplicacion.view_tblclientes %}imagen-desvanecida{% endif %}">
-                                                <p class="mt-3"><b>Registros: </b> {{ ContClientes }}</p>
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body cardcatalogob">
+                                                    <h5 class="card-title--medium">Clientes<br></h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/cliente.png' %}"
+                                                        class="imagen-catalogo {% if not perms.Aplicacion.add_tblclientes and not perms.Aplicacion.view_tblclientes %}imagen-desvanecida{% endif %}">
+                                                    <p class="mt-3"><b>Registros: </b> {{ ContClientes }}</p>
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tblclientes or perms.Aplicacion.view_tblclientes %}
+                                            {% if perms.Aplicacion.add_tblclientes or perms.Aplicacion.view_tblclientes %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -485,20 +493,20 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tblproveedores or perms.Aplicacion.view_tblproveedores %}
                                     <a href="{% url 'catalogo:T_Proveedor' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium">Proveedor</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/proveedores.png' %}"
-                                                    class="imagen-catalogo {% if not perms.Aplicacion.add_tblproveedores and not perms.Aplicacion.view_tblproveedores %}imagen-desvanecida{% endif %}">
-                                                <p class="mt-3"><b>Registros: </b> {{ ContProveedores }}</p>
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">Proveedor</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/proveedores.png' %}"
+                                                        class="imagen-catalogo {% if not perms.Aplicacion.add_tblproveedores and not perms.Aplicacion.view_tblproveedores %}imagen-desvanecida{% endif %}">
+                                                    <p class="mt-3"><b>Registros: </b> {{ ContProveedores }}</p>
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tblproveedores or perms.Aplicacion.view_tblproveedores %}
+                                            {% if perms.Aplicacion.add_tblproveedores or perms.Aplicacion.view_tblproveedores %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -508,20 +516,20 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tbloperadores or perms.Aplicacion.view_tbloperadores %}
                                     <a href="{% url 'catalogo:T_Operador' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium">Operador</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/operadores.png' %}"
-                                                    class="imagen-catalogo {% if not perms.Aplicacion.add_tbloperadores and not perms.Aplicacion.view_tbloperadores %}imagen-desvanecida{% endif %}">
-                                                <p class="mt-3"><b>Registros: </b> {{ ContOperadores }}</p>
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">Operador</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/operadores.png' %}"
+                                                        class="imagen-catalogo {% if not perms.Aplicacion.add_tbloperadores and not perms.Aplicacion.view_tbloperadores %}imagen-desvanecida{% endif %}">
+                                                    <p class="mt-3"><b>Registros: </b> {{ ContOperadores }}</p>
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tbloperadores or perms.Aplicacion.view_tbloperadores %}
+                                            {% if perms.Aplicacion.add_tbloperadores or perms.Aplicacion.view_tbloperadores %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -531,20 +539,20 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tblmateriaprima or perms.Aplicacion.view_tblmateriaprima %}
                                     <a href="{% url 'catalogo:T_MateriaPrima' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium">Materia Prima</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/materias primas.png' %}"
-                                                    class="imagen-catalogo {% if not perms.Aplicacion.add_tblmateriaprima and not perms.Aplicacion.view_tblmateriaprima %}imagen-desvanecida{% endif %}">
-                                                <p class="mt-3"><b>Registros: </b> {{ ContMateriaPrima }}</p>
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">Materia Prima</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/materias primas.png' %}"
+                                                        class="imagen-catalogo {% if not perms.Aplicacion.add_tblmateriaprima and not perms.Aplicacion.view_tblmateriaprima %}imagen-desvanecida{% endif %}">
+                                                    <p class="mt-3"><b>Registros: </b> {{ ContMateriaPrima }}</p>
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tblmateriaprima or perms.Aplicacion.view_tblmateriaprima %}
+                                            {% if perms.Aplicacion.add_tblmateriaprima or perms.Aplicacion.view_tblmateriaprima %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -554,20 +562,20 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tblproductos or perms.Aplicacion.view_tblproductos %}
                                     <a href="{% url 'catalogo:T_Producto' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium">Productos</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/producto.png' %}"
-                                                    class="imagen-catalogo {% if not perms.Aplicacion.add_tblproductos and not perms.Aplicacion.view_tblproductos %}imagen-desvanecida{% endif %}">
-                                                <p class="mt-3"><b>Registros: </b> {{ ContProductos }}</p>
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">Productos</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/producto.png' %}"
+                                                        class="imagen-catalogo {% if not perms.Aplicacion.add_tblproductos and not perms.Aplicacion.view_tblproductos %}imagen-desvanecida{% endif %}">
+                                                    <p class="mt-3"><b>Registros: </b> {{ ContProductos }}</p>
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tblproductos or perms.Aplicacion.view_tblproductos %}
+                                            {% if perms.Aplicacion.add_tblproductos or perms.Aplicacion.view_tblproductos %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -577,20 +585,20 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tblcorrales or perms.Aplicacion.view_tblcorrales %}
                                     <a href="{% url 'catalogo:T_Corral' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium">Corrales</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/corral.png' %}"
-                                                    class="imagen-catalogo {% if not perms.Aplicacion.add_tblcorrales and not perms.Aplicacion.view_tblcorrales %}imagen-desvanecida{% endif %}">
-                                                <p class="mt-3"><b>Registros: </b> {{ ContCorrales }}</p>
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">Corrales</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/corral.png' %}"
+                                                        class="imagen-catalogo {% if not perms.Aplicacion.add_tblcorrales and not perms.Aplicacion.view_tblcorrales %}imagen-desvanecida{% endif %}">
+                                                    <p class="mt-3"><b>Registros: </b> {{ ContCorrales }}</p>
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tblcorrales or perms.Aplicacion.view_tblcorrales %}
+                                            {% if perms.Aplicacion.add_tblcorrales or perms.Aplicacion.view_tblcorrales %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -600,20 +608,20 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tblanimalestipo or perms.Aplicacion.view_tblanimalestipo %}
                                     <a href="{% url 'catalogo:T_TipoAnimal' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium">Tipo Animales</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/tipo animal.png' %}"
-                                                    class="imagen-catalogo {% if not perms.Aplicacion.add_tblanimalestipo and not perms.Aplicacion.view_tblanimalestipo %}imagen-desvanecida{% endif %}">
-                                                <p class="mt-3"><b>Registros: </b> {{ ContTipoAnimales }}</p>
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">Tipo Animales</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/tipo animal.png' %}"
+                                                        class="imagen-catalogo {% if not perms.Aplicacion.add_tblanimalestipo and not perms.Aplicacion.view_tblanimalestipo %}imagen-desvanecida{% endif %}">
+                                                    <p class="mt-3"><b>Registros: </b> {{ ContTipoAnimales }}</p>
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tblanimalestipo or perms.Aplicacion.view_tblanimalestipo %}
+                                            {% if perms.Aplicacion.add_tblanimalestipo or perms.Aplicacion.view_tblanimalestipo %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -623,20 +631,21 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tblcontenedoresmateriaprima or perms.Aplicacion.view_tblcontenedoresmateriaprima %}
                                     <a href="{% url 'catalogo:T_ContenedorMP' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium" title="Contenedores Materias Primas">C. Materia Prima</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/contenedores mp.png' %}"
-                                                    class="imagen-catalogo {% if not perms.Aplicacion.add_tblcontenedoresmateriaprima and not perms.Aplicacion.view_tblcontenedoresmateriaprima %}imagen-desvanecida{% endif %}">
-                                                <p class="mt-3"><b>Registros: </b> {{ ContContMatPrima }}</p>
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium" title="Contenedores Materias Primas">
+                                                        C. Materia Prima</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/contenedores mp.png' %}"
+                                                        class="imagen-catalogo {% if not perms.Aplicacion.add_tblcontenedoresmateriaprima and not perms.Aplicacion.view_tblcontenedoresmateriaprima %}imagen-desvanecida{% endif %}">
+                                                    <p class="mt-3"><b>Registros: </b> {{ ContContMatPrima }}</p>
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tblcontenedoresmateriaprima or perms.Aplicacion.view_tblcontenedoresmateriaprima %}
+                                            {% if perms.Aplicacion.add_tblcontenedoresmateriaprima or perms.Aplicacion.view_tblcontenedoresmateriaprima %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -646,20 +655,21 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tblcontenedoresproductos or perms.Aplicacion.view_tblcontenedoresproductos %}
                                     <a href="{% url 'catalogo:T_ContenedorProducto' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium" title="Contenedores Productos">C. Productos</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/contenedores.png' %}"
-                                                    class="imagen-catalogo {% if not perms.Aplicacion.add_tblcontenedoresproductos and not perms.Aplicacion.view_tblcontenedoresproductos %}imagen-desvanecida{% endif %}">
-                                                <p class="mt-3"><b>Registros: </b> {{ ContContProductos }}</p>
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium" title="Contenedores Productos">C.
+                                                        Productos</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/contenedores.png' %}"
+                                                        class="imagen-catalogo {% if not perms.Aplicacion.add_tblcontenedoresproductos and not perms.Aplicacion.view_tblcontenedoresproductos %}imagen-desvanecida{% endif %}">
+                                                    <p class="mt-3"><b>Registros: </b> {{ ContContProductos }}</p>
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tblcontenedoresproductos or perms.Aplicacion.view_tblcontenedoresproductos %}
+                                            {% if perms.Aplicacion.add_tblcontenedoresproductos or perms.Aplicacion.view_tblcontenedoresproductos %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -669,20 +679,20 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tbltolva or perms.Aplicacion.view_tbltolva %}
                                     <a href="{% url 'catalogo:T_Tolva' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium">Tolva</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/tolva.png' %}"
-                                                    class="imagen-catalogo {% if not perms.Aplicacion.add_tbltolva and not perms.Aplicacion.view_tbltolva %}imagen-desvanecida{% endif %}">
-                                                <p class="mt-3"><b>Registros: </b> {{ ContTolva }}</p>
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">Tolva</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/tolva.png' %}"
+                                                        class="imagen-catalogo {% if not perms.Aplicacion.add_tbltolva and not perms.Aplicacion.view_tbltolva %}imagen-desvanecida{% endif %}">
+                                                    <p class="mt-3"><b>Registros: </b> {{ ContTolva }}</p>
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tbltolva or perms.Aplicacion.view_tbltolva %}
+                                            {% if perms.Aplicacion.add_tbltolva or perms.Aplicacion.view_tbltolva %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -714,19 +724,19 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tblmovimientoanimales or perms.Aplicacion.view_tblmovimientoanimales %}
                                     <a href="{% url 'proceso:T_MovAnimales' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body cardcatalogob">
-                                                <h5 class="card-title--medium">Animales</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/animales.png' %}"
-                                                    class="{% if not perms.Aplicacion.add_tblmovimientoanimales and not perms.Aplicacion.view_tblmovimientoanimales %}imagen-desvanecida{% endif %}">
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body cardcatalogob">
+                                                    <h5 class="card-title--medium">Animales</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/animales.png' %}"
+                                                        class="{% if not perms.Aplicacion.add_tblmovimientoanimales and not perms.Aplicacion.view_tblmovimientoanimales %}imagen-desvanecida{% endif %}">
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tblmovimientoanimales or perms.Aplicacion.view_tblmovimientoanimales %}
+                                            {% if perms.Aplicacion.add_tblmovimientoanimales or perms.Aplicacion.view_tblmovimientoanimales %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -737,19 +747,19 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tblasignacorrales or perms.Aplicacion.view_tblasignacorrales %}
                                     <a href="{% url 'proceso:T_Asignacion' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium">Asignación corral</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/asignacion.png' %}"
-                                                    class="{% if not perms.Aplicacion.add_tblasignacorrales and not perms.Aplicacion.view_tblasignacorrales %}imagen-desvanecida{% endif %}">
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">Asignación corral</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/asignacion.png' %}"
+                                                        class="{% if not perms.Aplicacion.add_tblasignacorrales and not perms.Aplicacion.view_tblasignacorrales %}imagen-desvanecida{% endif %}">
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tblasignacorrales or perms.Aplicacion.view_tblasignacorrales %}
+                                            {% if perms.Aplicacion.add_tblasignacorrales or perms.Aplicacion.view_tblasignacorrales %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -760,19 +770,19 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tblentradamp or perms.Aplicacion.view_tblentradamp or perms.Aplicacion.add_tblsalidamp or perms.Aplicacion.view_tblsalidamp or perms.Aplicacion.add_tblentradaproductos or perms.Aplicacion.view_tblentradaproductos or perms.Aplicacion.add_tblsalidaproductos or perms.Aplicacion.view_tblsalidaproductos %}
                                     <a href="{% url 'proceso:T_Ent_Materia_Prima' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium">Báscula</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/bascula.png' %}"
-                                                    class="{% if not perms.Aplicacion.add_tblentradamp and not perms.Aplicacion.view_tblentradamp and not perms.Aplicacion.add_tblsalidamp and not perms.Aplicacion.view_tblsalidamp and not perms.Aplicacion.add_tblentradaproductos and not perms.Aplicacion.view_tblentradaproductos and not perms.Aplicacion.add_tblsalidaproductos and not perms.Aplicacion.view_tblsalidaproductos %}imagen-desvanecida{% endif %}">
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">Báscula</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/bascula.png' %}"
+                                                        class="{% if not perms.Aplicacion.add_tblentradamp and not perms.Aplicacion.view_tblentradamp and not perms.Aplicacion.add_tblsalidamp and not perms.Aplicacion.view_tblsalidamp and not perms.Aplicacion.add_tblentradaproductos and not perms.Aplicacion.view_tblentradaproductos and not perms.Aplicacion.add_tblsalidaproductos and not perms.Aplicacion.view_tblsalidaproductos %}imagen-desvanecida{% endif %}">
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tblentradamp or perms.Aplicacion.view_tblentradamp or perms.Aplicacion.add_tblsalidamp or perms.Aplicacion.view_tblsalidamp or perms.Aplicacion.add_tblentradaproductos or perms.Aplicacion.view_tblentradaproductos or perms.Aplicacion.add_tblsalidaproductos or perms.Aplicacion.view_tblsalidaproductos %}
+                                            {% if perms.Aplicacion.add_tblentradamp or perms.Aplicacion.view_tblentradamp or perms.Aplicacion.add_tblsalidamp or perms.Aplicacion.view_tblsalidamp or perms.Aplicacion.add_tblentradaproductos or perms.Aplicacion.view_tblentradaproductos or perms.Aplicacion.add_tblsalidaproductos or perms.Aplicacion.view_tblsalidaproductos %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -783,19 +793,19 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tblinventarioinicialesmp or perms.Aplicacion.view_tblinventarioinicialesmp or perms.Aplicacion.add_tblinventarioinicialesproductos or perms.Aplicacion.view_tblinventarioinicialesproductos %}
                                     <a href="{% url 'proceso:Inventario_Presentacion' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium">Inventario</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/Inventario.png' %}"
-                                                    class="{% if not perms.Aplicacion.add_tblinventarioinicialesmp and not perms.Aplicacion.view_tblinventarioinicialesmp and not perms.Aplicacion.add_tblinventarioinicialesproductos and not perms.Aplicacion.view_tblinventarioinicialesproductos %}imagen-desvanecida{% endif %}">
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">Inventario</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/Inventario.png' %}"
+                                                        class="{% if not perms.Aplicacion.add_tblinventarioinicialesmp and not perms.Aplicacion.view_tblinventarioinicialesmp and not perms.Aplicacion.add_tblinventarioinicialesproductos and not perms.Aplicacion.view_tblinventarioinicialesproductos %}imagen-desvanecida{% endif %}">
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tblinventarioinicialesmp or perms.Aplicacion.view_tblinventarioinicialesmp or perms.Aplicacion.add_tblinventarioinicialesproductos or perms.Aplicacion.view_tblinventarioinicialesproductos %}
+                                            {% if perms.Aplicacion.add_tblinventarioinicialesmp or perms.Aplicacion.view_tblinventarioinicialesmp or perms.Aplicacion.add_tblinventarioinicialesproductos or perms.Aplicacion.view_tblinventarioinicialesproductos %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -806,19 +816,19 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tblservido or perms.Aplicacion.view_tblservido %}
                                     <a href="{% url 'proceso:T_Solicitud_Servidos' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium">Servidos</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/servidos.png' %}"
-                                                    class="{% if not perms.Aplicacion.add_tblservido and not perms.Aplicacion.view_tblservido %}imagen-desvanecida{% endif %}">
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">Servidos</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/servidos.png' %}"
+                                                        class="{% if not perms.Aplicacion.add_tblservido and not perms.Aplicacion.view_tblservido %}imagen-desvanecida{% endif %}">
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tblservido or perms.Aplicacion.view_tblservido %}
+                                            {% if perms.Aplicacion.add_tblservido or perms.Aplicacion.view_tblservido %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -829,19 +839,19 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tbltolva or perms.Aplicacion.view_tbltolva %}
                                     <a href="{% url 'proceso:T_Cargamento_Tolva' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium">Vehículos</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/tolva.png' %}"
-                                                    class="{% if not perms.Aplicacion.add_tbltolva and not perms.Aplicacion.view_tbltolva %}imagen-desvanecida{% endif %}">
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">Vehículos</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/tolva.png' %}"
+                                                        class="{% if not perms.Aplicacion.add_tbltolva and not perms.Aplicacion.view_tbltolva %}imagen-desvanecida{% endif %}">
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tbltolva or perms.Aplicacion.view_tbltolva %}
+                                            {% if perms.Aplicacion.add_tbltolva or perms.Aplicacion.view_tbltolva %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -871,19 +881,20 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tblestatus or perms.Aplicacion.view_tblestatus %}
                                     <a href="{% url 'subtabla:T_Estatus' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body cardcatalogob">
-                                                <h5 class="card-title--medium"><b style="color: transparent;">h </b><br> Estatus</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/et.png' %}"
-                                                    class="{% if not perms.Aplicacion.add_tblestatus and not perms.Aplicacion.view_tblestatus %}imagen-desvanecida{% endif %}">
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body cardcatalogob">
+                                                    <h5 class="card-title--medium"><b style="color: transparent;">h
+                                                        </b><br> Estatus</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/et.png' %}"
+                                                        class="{% if not perms.Aplicacion.add_tblestatus and not perms.Aplicacion.view_tblestatus %}imagen-desvanecida{% endif %}">
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tblestatus or perms.Aplicacion.view_tblestatus %}
+                                            {% if perms.Aplicacion.add_tblestatus or perms.Aplicacion.view_tblestatus %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -894,19 +905,19 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tbltipomaterial or perms.Aplicacion.view_tbltipomaterial %}
                                     <a href="{% url 'subtabla:T_Tipo_Material' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium">Tipo <br> Material</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/mt1.png' %}"
-                                                    class="{% if not perms.Aplicacion.add_tbltipomaterial and not perms.Aplicacion.view_tbltipomaterial %}imagen-desvanecida{% endif %}">
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">Tipo <br> Material</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/mt1.png' %}"
+                                                        class="{% if not perms.Aplicacion.add_tbltipomaterial and not perms.Aplicacion.view_tbltipomaterial %}imagen-desvanecida{% endif %}">
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tbltipomaterial or perms.Aplicacion.view_tbltipomaterial %}
+                                            {% if perms.Aplicacion.add_tbltipomaterial or perms.Aplicacion.view_tbltipomaterial %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -917,19 +928,19 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tbltipomov or perms.Aplicacion.view_tbltipomov %}
                                     <a href="{% url 'subtabla:T_Tipo_Movimiento' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium">Tipo <br> Movimiento</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/mv.png' %}"
-                                                    class="{% if not perms.Aplicacion.add_tbltipomov and not perms.Aplicacion.view_tbltipomov %}imagen-desvanecida{% endif %}">
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">Tipo <br> Movimiento</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/mv.png' %}"
+                                                        class="{% if not perms.Aplicacion.add_tbltipomov and not perms.Aplicacion.view_tbltipomov %}imagen-desvanecida{% endif %}">
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tbltipomov or perms.Aplicacion.view_tbltipomov %}
+                                            {% if perms.Aplicacion.add_tbltipomov or perms.Aplicacion.view_tbltipomov %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -940,19 +951,19 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tbltipopresentacion or perms.Aplicacion.view_tbltipopresentacion %}
                                     <a href="{% url 'subtabla:T_Tipo_Presentacion' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium">Tipo <br> Presentación</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/pt1.png' %}"
-                                                    class="{% if not perms.Aplicacion.add_tbltipopresentacion and not perms.Aplicacion.view_tbltipopresentacion %}imagen-desvanecida{% endif %}">
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">Tipo <br> Presentación</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/pt1.png' %}"
+                                                        class="{% if not perms.Aplicacion.add_tbltipopresentacion and not perms.Aplicacion.view_tbltipopresentacion %}imagen-desvanecida{% endif %}">
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tbltipopresentacion or perms.Aplicacion.view_tbltipopresentacion %}
+                                            {% if perms.Aplicacion.add_tbltipopresentacion or perms.Aplicacion.view_tbltipopresentacion %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -963,19 +974,19 @@
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tblunidades or perms.Aplicacion.view_tblunidades %}
                                     <a href="{% url 'subtabla:T_Unidad_Medida' %}">
-                                    {% else %}
-                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                    {% endif %}
-                                        <div class="card cardcatalogo">
-                                            <div class="card-body">
-                                                <h5 class="card-title--medium">Unidad <br> Medida</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/md1.png' %}"
-                                                    class="{% if not perms.Aplicacion.add_tblunidades and not perms.Aplicacion.view_tblunidades %}imagen-desvanecida{% endif %}">
-                                                <hr>
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">Unidad <br> Medida</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/md1.png' %}"
+                                                        class="{% if not perms.Aplicacion.add_tblunidades and not perms.Aplicacion.view_tblunidades %}imagen-desvanecida{% endif %}">
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% if perms.Aplicacion.add_tblunidades or perms.Aplicacion.view_tblunidades %}
+                                            {% if perms.Aplicacion.add_tblunidades or perms.Aplicacion.view_tblunidades %}
                                     </a>
                                     {% else %}
                                     </button>
@@ -1004,164 +1015,176 @@
 
                                 <div class="col-sm-12 col-md-12 col-lg-6">
                                     <div class="card">
-                                    <div class="card-body">
-                                        <h3 style="text-align: center;">Servidos</h3>
-                                        <div class="row">
+                                        <div class="card-body">
+                                            <h3 style="text-align: center;">Servidos</h3>
+                                            <div class="row">
 
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            {% if perms.admin.view_logentry %}
-                                            <a href="{% url 'reporte:R_Movimientos_Servidos' %}">
-                                            {% else %}
-                                            <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                            {% endif %}
-                                            <div class="card cardcatalogo">
-                                                <div class="card-body cardcatalogob">
-                                                <h5 class="card-title--medium">Movimientos</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/mov3.png' %}" class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
-                                                <hr>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    {% if perms.admin.view_logentry %}
+                                                    <a href="{% url 'reporte:R_Movimientos_Servidos' %}">
+                                                        {% else %}
+                                                        <button class="mi-boton" data-bs-toggle="modal"
+                                                            data-bs-target="#sinPermisos">
+                                                            {% endif %}
+                                                            <div class="card cardcatalogo">
+                                                                <div class="card-body cardcatalogob">
+                                                                    <h5 class="card-title--medium">Movimientos</h5>
+                                                                    <hr>
+                                                                    <img src="{% static 'images/catalogos/mov3.png' %}"
+                                                                        class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
+                                                                    <hr>
+                                                                </div>
+                                                            </div>
+                                                            {% if perms.admin.view_logentry %}
+                                                    </a>
+                                                    {% else %}
+                                                    </button>
+                                                    {% endif %}
                                                 </div>
-                                            </div>
-                                            {% if perms.admin.view_logentry %}
-                                            </a>
-                                            {% else %}
-                                            </button>
-                                            {% endif %}
-                                        </div>
 
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            {% if perms.admin.view_logentry %}
-                                            <a href="{% url 'reporte:R_Servidos_Liquidacion' %}">
-                                            {% else %}
-                                            <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                            {% endif %}
-                                            <div class="card cardcatalogo">
-                                                <div class="card-body">
-                                                <h5 class="card-title--medium">Liq. cliente</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/cliente.png' %}" class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
-                                                <hr>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    {% if perms.admin.view_logentry %}
+                                                    <a href="{% url 'reporte:R_Servidos_Liquidacion' %}">
+                                                        {% else %}
+                                                        <button class="mi-boton" data-bs-toggle="modal"
+                                                            data-bs-target="#sinPermisos">
+                                                            {% endif %}
+                                                            <div class="card cardcatalogo">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title--medium">Liq. cliente</h5>
+                                                                    <hr>
+                                                                    <img src="{% static 'images/catalogos/cliente.png' %}"
+                                                                        class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
+                                                                    <hr>
+                                                                </div>
+                                                            </div>
+                                                            {% if perms.admin.view_logentry %}
+                                                    </a>
+                                                    {% else %}
+                                                    </button>
+                                                    {% endif %}
                                                 </div>
+
                                             </div>
-                                            {% if perms.admin.view_logentry %}
-                                            </a>
-                                            {% else %}
-                                            </button>
-                                            {% endif %}
                                         </div>
-
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12 col-md-12 col-lg-6">
-                                    <div class="card">
-                                    <div class="card-body">
-                                        <h3 style="text-align: center;">Materia Prima</h3>
-                                        <div class="row">
-
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            {% if perms.admin.view_logentry %}
-                                            <a href="{% url 'reporte:R_Entrada_Materia_Prima' %}">
-                                            {% else %}
-                                            <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                            {% endif %}
-                                            <div class="card cardcatalogo">
-                                                <div class="card-body cardcatalogob">
-                                                <h5 class="card-title--medium">Entrada</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/emp2.png' %}" class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
-                                                <hr>
-                                                </div>
-                                            </div>
-                                            {% if perms.admin.view_logentry %}
-                                            </a>
-                                            {% else %}
-                                            </button>
-                                            {% endif %}
-                                        </div>
-
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            {% if perms.admin.view_logentry %}
-                                            <a href="{% url 'reporte:R_Salida_Materia_Prima' %}">
-                                            {% else %}
-                                            <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                            {% endif %}
-                                            <div class="card cardcatalogo">
-                                                <div class="card-body">
-                                                <h5 class="card-title--medium">Salida</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/smp2.png' %}" class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
-                                                <hr>
-                                                </div>
-                                            </div>
-                                            {% if perms.admin.view_logentry %}
-                                            </a>
-                                            {% else %}
-                                            </button>
-                                            {% endif %}
-                                        </div>
-
-                                        </div>
-                                    </div>
                                     </div>
                                 </div>
 
                                 <div class="col-sm-12 col-md-12 col-lg-6">
                                     <div class="card">
-                                    <div class="card-body">
-                                        <h3 style="text-align: center;">Animales</h3>
-                                        <div class="row">
+                                        <div class="card-body">
+                                            <h3 style="text-align: center;">Materia Prima</h3>
+                                            <div class="row">
 
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            {% if perms.admin.view_logentry %}
-                                            <a href="{% url 'reporte:R_Movimientos_Animales' %}">
-                                            {% else %}
-                                            <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                            {% endif %}
-                                            <div class="card cardcatalogo">
-                                                <div class="card-body cardcatalogob">
-                                                <h5 class="card-title--medium">Movimiento</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/mov3.png' %}" class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
-                                                <hr>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    {% if perms.admin.view_logentry %}
+                                                    <a href="{% url 'reporte:R_Entrada_Materia_Prima' %}">
+                                                        {% else %}
+                                                        <button class="mi-boton" data-bs-toggle="modal"
+                                                            data-bs-target="#sinPermisos">
+                                                            {% endif %}
+                                                            <div class="card cardcatalogo">
+                                                                <div class="card-body cardcatalogob">
+                                                                    <h5 class="card-title--medium">Entrada</h5>
+                                                                    <hr>
+                                                                    <img src="{% static 'images/catalogos/emp2.png' %}"
+                                                                        class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
+                                                                    <hr>
+                                                                </div>
+                                                            </div>
+                                                            {% if perms.admin.view_logentry %}
+                                                    </a>
+                                                    {% else %}
+                                                    </button>
+                                                    {% endif %}
                                                 </div>
-                                            </div>
-                                            {% if perms.admin.view_logentry %}
-                                            </a>
-                                            {% else %}
-                                            </button>
-                                            {% endif %}
-                                        </div>
 
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            {% if perms.admin.view_logentry %}
-                                            <a href="{% url 'reporte:R_Animales_Clientes' %}">
-                                            {% else %}
-                                            <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
-                                            {% endif %}
-                                            <div class="card cardcatalogo">
-                                                <div class="card-body">
-                                                <h5 class="card-title--medium">Cliente</h5>
-                                                <hr>
-                                                <img src="{% static 'images/catalogos/cliente.png' %}" class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
-                                                <hr>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    {% if perms.admin.view_logentry %}
+                                                    <a href="{% url 'reporte:R_Salida_Materia_Prima' %}">
+                                                        {% else %}
+                                                        <button class="mi-boton" data-bs-toggle="modal"
+                                                            data-bs-target="#sinPermisos">
+                                                            {% endif %}
+                                                            <div class="card cardcatalogo">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title--medium">Salida</h5>
+                                                                    <hr>
+                                                                    <img src="{% static 'images/catalogos/smp2.png' %}"
+                                                                        class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
+                                                                    <hr>
+                                                                </div>
+                                                            </div>
+                                                            {% if perms.admin.view_logentry %}
+                                                    </a>
+                                                    {% else %}
+                                                    </button>
+                                                    {% endif %}
                                                 </div>
-                                            </div>
-                                            {% if perms.admin.view_logentry %}
-                                            </a>
-                                            {% else %}
-                                            </button>
-                                            {% endif %}
-                                        </div>
 
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </div>
 
+                                <div class="col-sm-12 col-md-12 col-lg-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h3 style="text-align: center;">Animales</h3>
+                                            <div class="row">
+
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    {% if perms.admin.view_logentry %}
+                                                    <a href="{% url 'reporte:R_Movimientos_Animales' %}">
+                                                        {% else %}
+                                                        <button class="mi-boton" data-bs-toggle="modal"
+                                                            data-bs-target="#sinPermisos">
+                                                            {% endif %}
+                                                            <div class="card cardcatalogo">
+                                                                <div class="card-body cardcatalogob">
+                                                                    <h5 class="card-title--medium">Movimiento</h5>
+                                                                    <hr>
+                                                                    <img src="{% static 'images/catalogos/mov3.png' %}"
+                                                                        class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
+                                                                    <hr>
+                                                                </div>
+                                                            </div>
+                                                            {% if perms.admin.view_logentry %}
+                                                    </a>
+                                                    {% else %}
+                                                    </button>
+                                                    {% endif %}
+                                                </div>
+
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    {% if perms.admin.view_logentry %}
+                                                    <a href="{% url 'reporte:R_Animales_Clientes' %}">
+                                                        {% else %}
+                                                        <button class="mi-boton" data-bs-toggle="modal"
+                                                            data-bs-target="#sinPermisos">
+                                                            {% endif %}
+                                                            <div class="card cardcatalogo">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title--medium">Cliente</h5>
+                                                                    <hr>
+                                                                    <img src="{% static 'images/catalogos/cliente.png' %}"
+                                                                        class="{% if not perms.admin.view_logentry %}imagen-desvanecida{% endif %}">
+                                                                    <hr>
+                                                                </div>
+                                                            </div>
+                                                            {% if perms.admin.view_logentry %}
+                                                    </a>
+                                                    {% else %}
+                                                    </button>
+                                                    {% endif %}
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
+                            </div>
 
 
                         </div>
@@ -1191,8 +1214,10 @@
                                             <div class="flip-card-front">
                                                 <p class="role-label">{{ grupo.name }}</p>
 
-                                                <div class="profile-img-container {% if item.usuario.last_login %}logueado{% else %}no-logueado{% endif %}">
-                                                    <img src="{% static 'images/catalogos/perfil.png' %}" alt="Perfil" class="profile-img">
+                                                <div
+                                                    class="profile-img-container {% if item.usuario.last_login %}logueado{% else %}no-logueado{% endif %}">
+                                                    <img src="{% static 'images/catalogos/perfil.png' %}" alt="Perfil"
+                                                        class="profile-img">
                                                 </div>
 
                                                 <p class="user-name">{{ item.usuario.first_name }}

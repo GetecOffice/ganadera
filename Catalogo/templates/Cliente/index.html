@@ -11,23 +11,24 @@
         <div class="row" style="padding-right: 0 !important;">
             <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;">
                 <div class="card">
-                    <div class="card-header d-block d-sm-flex border-0">
+                    <div class="card-header d-block border-0">
                         <div class="row">
-                            <div class="col-sm-10 col-md-10 col-lg-10">
-                                <div class="me-3">
-                                    <h4 class="card-title mb-2">Recolección de datos, linea de producción: tostador
-                                    </h4>
-                                    <span class="fs-12">En la siguiente tabla se mostrara los datos recolectados del
-                                        PLC instalados en cada linea de producción. Los datos de la siguiente tabla se
-                                        actualizan automaticamente cada 5 segundos</span>
-                                </div>
+                            <div class="col-8">
+                                <h4 class="card-title mb-1 d-flex align-items-center">
+                                    <a href="{% url 'aplicacion:Menu_Presentacion' %}#Catalogo" class="me-2">
+                                        <i class="bi bi-arrow-left-circle text-black fs-28"></i>
+                                    </a>
+                                    <b>TABLA CLIENTE</b>
+                                </h4>
+                               
                             </div>
-                            <div class="col-sm-2 col-md-2 col-lg-2 d-flex justify-content-end">
-                                <a href="{% url 'catalogo:F_Cliente'%}">
-                                    <button class="c-button ml-5">
+
+                            <!-- BOTÓN -->
+                            <div class="col-4 d-flex justify-content-md-end justify-content-start mt-3 mt-md-0">
+                                <a href="{% url 'catalogo:F_Cliente' %}">
+                                    <button class="c-button">
                                         <span class="c-main">
-                                            <span class="c-ico"><span class="c-blur"></span> <span
-                                                    class="ico-text">+</span></span>
+                                            <span class="c-ico"><span class="c-blur"></span> <span class="ico-text">+</span></span>
                                             Agregar
                                         </span>
                                     </button>
