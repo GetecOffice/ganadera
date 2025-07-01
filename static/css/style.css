@@ -18220,7 +18220,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   width: 20.5rem;
   padding-bottom: 0;
   height: calc(100% - 135px);
-  position: absolute;
+  position: fixed;
   top: 7.2rem;
   left: 1.25rem;
   padding-top: 0;
