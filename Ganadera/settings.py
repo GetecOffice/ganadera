@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Aplicacion',
     'Catalogo',
+    'Configuracion',
+    'Descargas',    
     'Proceso',
     'Subtabla',
     'Reporte',

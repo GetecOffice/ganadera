@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}CLIENTE{% endblock %}
+{% block body %}
+<!--**********************************
+            Content body start
+        ***********************************-->
+{% block head %}CATALOGO{% endblock %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row" style="padding-right: 0 !important;">
+            <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;">
+                <div class="card">
+                    <div class="card-header d-block d-sm-flex border-0">
+                        <div class="me-3">
+                            <h4 class="card-title mb-2">
+                                <a href="{% url 'configuracion:T_Permisos'%}">
+                                    <i class="bi bi-arrow-left-circle text-black fs-28"></i>
+                                </a>
+                                <b>EDITAR PERMISO #{{TEPermisos.id}}</b>
+
+                            </h4>
+
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-body tab-content px-4 pt-2">
+                        <div class="tab-pane active show fade" id="monthly" role="tabpanel">
+                            <form action="{% url 'configuracion:A_Permisos'%}" method="POST" autocomplete="off">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="hidden" name="id" value="{{ TEPermisos.id }}">
+                                    <div class="row">
+                                        <!-- <h6 class="h6-form">CÓDIGO</h6> -->
+                                        <input type="hidden" value="{{TEPermisos.codename}}" class="form-control input"
+                                            readonly>
+                                        <div class="col-sm-12 col-md-4 col-lg col-xl mb-3">
+                                            <h6 class="h6-form">NOMBRE</h6>
+                                            <input type="text" name="descripcion" value="{{TEPermisos.name}}"
+                                                class="form-control input" placeholder="Ingrese el permiso en español"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-success">Actualizar</button>
+                                        <a href="{% url 'configuracion:T_Permisos'%}"
+                                            class="btn btn-danger">Cancelar</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

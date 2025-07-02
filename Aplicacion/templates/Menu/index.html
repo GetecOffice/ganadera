@@ -1267,9 +1267,98 @@
                     </div>
                 </div>
             </div>
+            <hr class="mt-3">
+            <hr>
+            <hr class="mb-5">
+            <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;" id="Configuracion">
+                <div class="card">
+                    <div class="card-header d-block d-sm-flex border-0">
+                        <div style="display: flex; justify-content: center; align-items: center; ">
+                            <h2>CONFIGURACIÓN</h2>
+                        </div>
+                    </div>
+
+                    <div class="card-body tab-content p-0">
+                        <div class="tab-pane active show fade" id="monthly" role="tabpanel">
+                            <div class="row px-4">
+                                <div class="col-sm-12 col-md-4 col-lg-4">
+                                    {% if perms.admin.view_logentry %}
+                                    <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#modalFichaTecnica">
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body cardcatalogob">
+                                                    <h5 class="card-title--medium">RESPALDO BASE DE DATOS<br></h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/base1.png' %}"
+                                                        class="imagen-catalogo {% if not perms.Aplicacion.add_tblclientes and not perms.Aplicacion.view_tblclientes %}imagen-desvanecida{% endif %}">
+                                                    
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                            {% if perms.admin.view_logentry %}
+                                    </button>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-sm-12 col-md-4 col-lg-4">
+                                    {% if perms.admin.view_logentry %}
+                                    <a href="{% url 'configuracion:T_Grupos' %}">
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">GRUPOS</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/grupos1.png' %}"
+                                                        class="imagen-catalogo {% if not perms.Aplicacion.add_tblproveedores and not perms.Aplicacion.view_tblproveedores %}imagen-desvanecida{% endif %}">
+                                                    
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                            {% if perms.admin.view_logentry %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-sm-12 col-md-4 col-lg-4">
+                                    {% if perms.admin.view_logentry %}
+                                    <a href="{% url 'configuracion:T_Permisos' %}">
+                                        {% else %}
+                                        <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
+                                            {% endif %}
+                                            <div class="card cardcatalogo">
+                                                <div class="card-body">
+                                                    <h5 class="card-title--medium">PERMISOS</h5>
+                                                    <hr>
+                                                    <img src="{% static 'images/catalogos/permisos1.png' %}"
+                                                        class="imagen-catalogo {% if not perms.Aplicacion.add_tbloperadores and not perms.Aplicacion.view_tbloperadores %}imagen-desvanecida{% endif %}">
+                                                    
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                            {% if perms.admin.view_logentry %}
+                                    </a>
+                                    {% else %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
         </div>
     </div>
 </div>
+
 <script>
 
     var chartBar2 = function () {

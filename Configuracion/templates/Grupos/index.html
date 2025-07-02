@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}CLIENTE{% endblock %}
+{% block body %}
+<!--**********************************
+            Content body start
+        ***********************************-->
+{% block head %}CATALOGO{% endblock %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row" style="padding-right: 0 !important;">
+            <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;">
+                <div class="card">
+                    <div class="card-header d-block  border-0">
+                        <div class="row">
+                            <div class="col-8">
+                                <h4 class="card-title mb-1 d-flex align-items-center">
+                                    <a href="{% url 'aplicacion:Menu_Presentacion' %}#Configuracion" class="me-2">
+                                        <i class="bi bi-arrow-left-circle text-black fs-28"></i>
+                                    </a>
+                                    <b>TABLA GRUPOS</b>
+                                </h4>
+
+                            </div>
+
+                            <!-- BOTÓN -->
+                            <div class="col-4 d-flex justify-content-md-end justify-content-start mt-3 mt-md-0">
+                                <a href="{% url 'configuracion:F_Grupos' %}">
+                                    <button class="c-button">
+                                        <span class="c-main">
+                                            <span class="c-ico"><span class="c-blur"></span> <span
+                                                    class="ico-text">+</span></span>
+                                            Agregar
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card-body tab-content p-0">
+                        <div class="tab-pane active show fade" id="monthly" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table table-responsive-md card-table transactions-table" id="miTabla">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-black fs-16 font-w600 th-responsive">
+                                                DESCRIPCIÓN
+                                            </th>
+                                            {% if perms.auth.add_permission %}
+                                            <th class="text-black fs-16 font-w600 th-responsive">
+                                                AGREGAR PERMISOS
+                                            </th>
+                                            {% endif %}
+                                            {% if perms.auth.change_group or perms.auth.delete_group %}
+                                            <th class="text-black fs-16 font-w600 th-responsive">
+                                                ACCIÓN
+                                            </th>
+                                            {% endif %}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for Dato in TGrupos %}
+                                        <tr>
+                                            <td>
+                                                <span class="fs-16 text-black font-w400">
+                                                    {{Dato.name}}
+                                                </span>
+                                            </td>
+                                            {% if perms.auth.add_permission %}
+                                            <td>
+                                                <form action="{% url 'configuracion:T_PermisoAsignadosEliminados' %}" class="pr-5 pl-5" method="POST">
+                                                    {% csrf_token %}
+                                                    <div class="form-group"
+                                                        style="justify-content: center; display: flex;">
+                                                        <input type="hidden" name="grupo" value="{{Dato.id}}">
+
+                                                        <button type="submit" class="btn btn-primary btn-sm">Agregar
+                                                            permiso</button>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                            {% endif %}
+                                            {% if perms.auth.change_group or perms.auth.delete_group %}
+                                            <td>
+                                                {% if perms.auth.change_group %}
+                                                <a class="btn btn-success btn-sm" style="display: inline-block;"
+                                                    href="Editar/{{Dato.id}}"><i class="fas fa-pen"></i>
+                                                    Editar</a>
+                                                {% endif %}
+
+                                            </td>
+                                            {% endif %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

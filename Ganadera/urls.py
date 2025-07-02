@@ -21,6 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('Aplicacion.urls', 'Aplicacion'), namespace='aplicacion')),
     path('Catalogo/', include(('Catalogo.urls', 'Catalogo'), namespace='catalogo')),
+    path('Configuracion/', include(('Configuracion.urls', 'Configuracion'), namespace='configuracion')),
+    path('Descargas/', include(('Descargas.urls', 'Descargas'), namespace='descargas')),
     path('Proceso/', include(('Proceso.urls', 'Proceso'), namespace='proceso')),
     path('Subtabla/', include(('Subtabla.urls', 'Subtabla'), namespace='subtabla')),
     path('Reporte/', include(('Reporte.urls', 'Reporte'), namespace='reporte')),

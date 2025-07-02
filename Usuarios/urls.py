@@ -4,12 +4,7 @@ from . import views
 
 
 urlpatterns = [
-    # PAGOS
-    path('Estado-Pago/', views.estadoPago, name='Pagos'),
-    path('No-Hay-Servicio/', views.NoPago, name='NoPago'),
-    path('SeAgregoElPago/', views.registrarPago),
-    path('Notificaciones/', views.notificacion),
-    
+   
     # EDITAR USUARIOS
     path('EdicionUsuario/<id>', views.edicionUsuario, name="E_Usuario"),
 

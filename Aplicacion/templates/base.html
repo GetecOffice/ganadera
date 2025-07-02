@@ -248,7 +248,7 @@
                             <span class="nav-text">USUARIOS</span>
                         </a>
                     </li>
-                    <li><a href="{% url 'aplicacion:Menu_Presentacion' %}#Configurarion" class="ai-icon"
+                    <li><a href="{% url 'aplicacion:Menu_Presentacion' %}#Configuracion" class="ai-icon"
                             aria-expanded="false">
                             <i class="flaticon-013-checkmark"></i>
                             <span class="nav-text">CONFIGURACIÓN</span>
@@ -277,6 +277,7 @@
             Sidebar end
         ***********************************-->
         {% if user.is_authenticated %}
+        {% if ServiciosWeb.Servicio == True or perms.Aplicacion.add_tblserviciosweb %}
         {% block body %}
 
         {% endblock %}
@@ -304,6 +305,11 @@
             {% endfor %}
             {% endif %}
         </div>
+        {% else %}
+        <script>
+            window.location.href = "{% url 'aplicacion:NoPago' %}";
+        </script>
+        {% endif %}
         {% else %}
         <script>
             window.location.href = "{% url 'aplicacion:Login' %}";

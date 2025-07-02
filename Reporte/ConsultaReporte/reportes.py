@@ -294,7 +294,7 @@ def reportePorClientes2(request):
                 AND %s THEN  Aplicacion_tbldetallemovanimales.Cantidad ELSE 0 END) AS SALIDAS
                 FROM  Aplicacion_tblmovimientoanimales
                 INNER JOIN Aplicacion_tblclientes ON Aplicacion_tblclientes.ID = Aplicacion_tblmovimientoanimales. IDCliente_id 
-                INNER JOIN Aplicacion_tblcorrales ON  Aplicacion_tblcorrales.ID = Aplicacion_tblmovimientoanimales.IDCorral_id 
+                INNER JOIN Aplicacion_tblcorrales ON  Aplicacion_tblcorrales.ID = Aplicacion_tbldetallemovanimales.IDCorral_id 
                 INNER JOIN Aplicacion_tbldetallemovanimales ON  Aplicacion_tblmovimientoanimales.Folio = Aplicacion_tbldetallemovanimales.IDFolio
                 WHERE  Aplicacion_tblmovimientoanimales. IDCliente_id IN (SELECT Aplicacion_tblcorrales.IDCliente_id FROM Aplicacion_tblcorrales WHERE Aplicacion_tblcorrales.IDCliente_id  > 1 )
                 GROUP BY Aplicacion_tblmovimientoanimales. IDCliente_id) AS  TT ORDER BY TT.CLIENTE"""
@@ -315,12 +315,12 @@ def reportePorClientes2(request):
                     AND %s THEN   Aplicacion_tbldetallemovanimales.Cantidad   ELSE 0 END) AS SALIDAS
                 FROM   Aplicacion_tblmovimientoanimales
                 INNER JOIN Aplicacion_tblclientes ON Aplicacion_tblclientes.ID =  Aplicacion_tblmovimientoanimales.IDCliente_id 
-                INNER JOIN Aplicacion_tblcorrales ON  Aplicacion_tblcorrales.ID =  Aplicacion_tblmovimientoanimales.IDCorral_id
+                INNER JOIN Aplicacion_tblcorrales ON  Aplicacion_tblcorrales.ID =  Aplicacion_tbldetallemovanimales.IDCorral_id
                 INNER JOIN Aplicacion_tbldetallemovanimales ON  Aplicacion_tblmovimientoanimales.Folio = Aplicacion_tbldetallemovanimales.IDFolio
-                WHERE   Aplicacion_tblmovimientoanimales.IDCorral_id IN 
+                WHERE   Aplicacion_tbldetallemovanimales.IDCorral_id IN 
                     (SELECT Aplicacion_tblcorrales.ID FROM Aplicacion_tblcorrales WHERE Aplicacion_tblcorrales.IDCliente_id = %s) 
                     AND  Aplicacion_tblmovimientoanimales.IDCliente_id = %s
-                GROUP BY  Aplicacion_tblmovimientoanimales.IDCorral_id) AS  TT
+                GROUP BY  Aplicacion_tbldetallemovanimales.IDCorral_id) AS  TT
                 ORDER BY TT.CORRAL"""
 
                 with connection.cursor() as cursor:
@@ -340,7 +340,7 @@ def reportePorClientes2(request):
         AND %s THEN  Aplicacion_tbldetallemovanimales.Cantidad ELSE 0 END) AS SALIDAS
         FROM  Aplicacion_tblmovimientoanimales
         INNER JOIN Aplicacion_tblclientes ON Aplicacion_tblclientes.ID = Aplicacion_tblmovimientoanimales. IDCliente_id 
-        INNER JOIN Aplicacion_tblcorrales ON  Aplicacion_tblcorrales.ID = Aplicacion_tblmovimientoanimales.IDCorral_id 
+        INNER JOIN Aplicacion_tblcorrales ON  Aplicacion_tblcorrales.ID = Aplicacion_tbldetallemovanimales.IDCorral_id 
 		INNER JOIN Aplicacion_tbldetallemovanimales ON  Aplicacion_tblmovimientoanimales.Folio = Aplicacion_tbldetallemovanimales.IDFolio
         WHERE  Aplicacion_tblmovimientoanimales. IDCliente_id IN (SELECT Aplicacion_tblcorrales.IDCliente_id FROM Aplicacion_tblcorrales WHERE Aplicacion_tblcorrales.IDCliente_id  > 1 )
         GROUP BY Aplicacion_tblmovimientoanimales. IDCliente_id) AS  TT ORDER BY TT.CLIENTE"""
@@ -373,10 +373,10 @@ def reportePorClientesCorrales(request):
                     BETWEEN %s AND %s THEN  Aplicacion_tbldetallemovanimales.Cantidad  ELSE 0 END) AS SALIDA
                 FROM  Aplicacion_tblmovimientoanimales
                 INNER JOIN Aplicacion_tblclientes ON Aplicacion_tblclientes.ID = Aplicacion_tblmovimientoanimales.IDCliente_id 
-                INNER JOIN Aplicacion_tblcorrales ON  Aplicacion_tblcorrales.ID = Aplicacion_tblmovimientoanimales.IDCorral_id
+                INNER JOIN Aplicacion_tblcorrales ON  Aplicacion_tblcorrales.ID = Aplicacion_tbldetallemovanimales.IDCorral_id
                 INNER JOIN Aplicacion_tbldetallemovanimales ON  Aplicacion_tblmovimientoanimales.Folio = Aplicacion_tbldetallemovanimales.IDFolio
-                WHERE  Aplicacion_tblmovimientoanimales.IDCorral_id IN (SELECT  Aplicacion_tblcorrales.ID FROM Aplicacion_tblcorrales)
-                GROUP BY Aplicacion_tblmovimientoanimales.IDCorral_id, Aplicacion_tblclientes.Nombre"""
+                WHERE  Aplicacion_tbldetallemovanimales.IDCorral_id IN (SELECT  Aplicacion_tblcorrales.ID FROM Aplicacion_tblcorrales)
+                GROUP BY Aplicacion_tbldetallemovanimales.IDCorral_id, Aplicacion_tblclientes.Nombre"""
 
                 with connection.cursor() as cursor:
                     cursor.execute(
@@ -398,12 +398,12 @@ def reportePorClientesCorrales(request):
                     BETWEEN %s AND %s THEN  Aplicacion_tbldetallemovanimales.Cantidad  ELSE 0 END) AS SALIDA
                 FROM  Aplicacion_tblmovimientoanimales
                 INNER JOIN Aplicacion_tblclientes ON Aplicacion_tblclientes.ID = Aplicacion_tblmovimientoanimales.IDCliente_id 
-                INNER JOIN Aplicacion_tblcorrales ON  Aplicacion_tblcorrales.ID = Aplicacion_tblmovimientoanimales.IDCorral_id
+                INNER JOIN Aplicacion_tblcorrales ON  Aplicacion_tblcorrales.ID = Aplicacion_tbldetallemovanimales.IDCorral_id
                 INNER JOIN Aplicacion_tbldetallemovanimales ON  Aplicacion_tblmovimientoanimales.Folio = Aplicacion_tbldetallemovanimales.IDFolio
-                WHERE  Aplicacion_tblmovimientoanimales.IDCorral_id IN 
+                WHERE  Aplicacion_tbldetallemovanimales.IDCorral_id IN 
                     (SELECT  Aplicacion_tblcorrales.ID FROM Aplicacion_tblcorrales where  Aplicacion_tblcorrales.IDCliente_id = %s)
                                 AND Aplicacion_tblmovimientoanimales.IDCliente_id = %s
-                GROUP BY Aplicacion_tblmovimientoanimales.IDCorral_id, Aplicacion_tblclientes.Nombre """
+                GROUP BY Aplicacion_tbldetallemovanimales.IDCorral_id, Aplicacion_tblclientes.Nombre """
 
                 with connection.cursor() as cursor:
                     cursor.execute(
@@ -425,10 +425,10 @@ def reportePorClientesCorrales(request):
             BETWEEN %s AND %s THEN  Aplicacion_tbldetallemovanimales.Cantidad  ELSE 0 END) AS SALIDA
         FROM  Aplicacion_tblmovimientoanimales
         INNER JOIN Aplicacion_tblclientes ON Aplicacion_tblclientes.ID = Aplicacion_tblmovimientoanimales.IDCliente_id 
-        INNER JOIN Aplicacion_tblcorrales ON  Aplicacion_tblcorrales.ID = Aplicacion_tblmovimientoanimales.IDCorral_id
+        INNER JOIN Aplicacion_tblcorrales ON  Aplicacion_tblcorrales.ID = Aplicacion_tbldetallemovanimales.IDCorral_id
         INNER JOIN Aplicacion_tbldetallemovanimales ON  Aplicacion_tblmovimientoanimales.Folio = Aplicacion_tbldetallemovanimales.IDFolio
-        WHERE  Aplicacion_tblmovimientoanimales.IDCorral_id IN (SELECT  Aplicacion_tblcorrales.ID FROM Aplicacion_tblcorrales)
-        GROUP BY Aplicacion_tblmovimientoanimales.IDCorral_id, Aplicacion_tblclientes.Nombre"""
+        WHERE  Aplicacion_tbldetallemovanimales.IDCorral_id IN (SELECT  Aplicacion_tblcorrales.ID FROM Aplicacion_tblcorrales)
+        GROUP BY Aplicacion_tbldetallemovanimales.IDCorral_id, Aplicacion_tblclientes.Nombre"""
         with connection.cursor() as cursor:
             cursor.execute(consulta_sql, [
                            FechaDeHoy, FechaDeHoy, FechaDeHoy, FechaDeHoy, FechaDeHoy, FechaDeHoy])
@@ -1017,7 +1017,7 @@ def CantidadActualAnimales(IDCorral, fecha):
     SUM(case WHEN  Aplicacion_tblmovimientoanimales.IDMovimiento_id = 2  THEN  Aplicacion_tbldetallemovanimales.Cantidad  ELSE 0 END) AS SUMA
     FROM Aplicacion_tblmovimientoanimales 
     INNER JOIN Aplicacion_tbldetallemovanimales ON Aplicacion_tblmovimientoanimales.Folio = Aplicacion_tbldetallemovanimales.IDFolio
-    WHERE Aplicacion_tblmovimientoanimales.IDCorral_id= %s  AND Aplicacion_tblmovimientoanimales.Fecha BETWEEN 
+    WHERE Aplicacion_tbldetallemovanimales.IDCorral_id= %s  AND Aplicacion_tblmovimientoanimales.Fecha BETWEEN 
     (SELECT FechaAsigna FROM Aplicacion_tblcorrales WHERE Aplicacion_tblcorrales.ID= %s ) AND %s"""
 
     with connection.cursor() as cursor:

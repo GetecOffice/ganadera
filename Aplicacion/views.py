@@ -206,7 +206,8 @@ def notificacion(request):
 
 def NoPago(request):
     ServiciosWeb = servicioActivo()
-    return render(request, 'Configuracion/pagos/Nopago.html',{'ServiciosWeb': ServiciosWeb})
+    print(ServiciosWeb)    
+    return render(request, 'NoPago/index.html',{'ServiciosWeb': ServiciosWeb})
 
 def usuarioBloqueado(request):
     ServiciosWeb = servicioActivo()
@@ -651,6 +652,7 @@ def actualizarPermiso(request):
     
     
     # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 def menuInfo(request):
     ContClientes = tblClientes.objects.count()
     ContProveedores = tblProveedores.objects.count()
@@ -749,13 +751,17 @@ def menuInfo(request):
         usuarios_con_grupo.append({'usuario': usuario, 'is_authenticated': is_authenticated, 'grupos': grupos})
     
     ServiciosWeb = servicioActivo()
+
     
+    # CONFIGURACION
+    TConfiguracion = tblConfiguracion.objects.all()
+    print(TConfiguracion)
     return render(request, 'Menu/index.html', { 'ContClientes': ContClientes, 'ContProveedores': ContProveedores, 'ContOperadores': ContOperadores, 
     'ContMateriaPrima': ContMateriaPrima, 'ContProductos': ContProductos, 'ContCorrales': ContCorrales, 'ContTipoAnimales': ContTipoAnimales, 
     'ContContMatPrima': ContContMatPrima, 'ContContProductos': ContContProductos, 'ContTolva': ContTolva, 'data': json.dumps(data), 'labels': json.dumps(labels), 
     'datos_tolvas':datos_tolvas, 'corralesLiberados': corralesLiberados, 'corralesAsignados':corralesAsignados, 'resultado_animales': resultado_final,
     'manuales':manuales, 'registros':registros, 'pendientes':pendientes, 'servidos':servidos, 'tolva':tolva, 'usuarios_con_grupo': usuarios_con_grupo  ,
-    'ServiciosWeb': ServiciosWeb,
+    'ServiciosWeb': ServiciosWeb, 'TConfiguracion':TConfiguracion
     })
     
     
