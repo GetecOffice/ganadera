@@ -87,7 +87,7 @@
                             </form>
                         </div>
                         <div class="col-2">
-                            <form action="/Descarga_PDF_Reporte_Liquidacion_Servidos/" method="POST">
+                            <form action="{% url 'descargas:PDF_Reportes_Liq_Servidos' %}" method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" value="{{ Cliente }}" name="Cliente">
                                 <input type="hidden" value="{{Fecha}}" name="fechaInicial">

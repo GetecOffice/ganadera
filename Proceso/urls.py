@@ -120,13 +120,5 @@ urlpatterns = [
     path('ActualizarOperadoresSalidaProducto/', actualizar.actualizarOperadoresSalidaProducto, name="A_Operador_Salida_Producto"),
     path('ActualizarOperadoresEntradaMateriaPrima/', actualizar.actualizarOperadoresEntradaMateriasPrimas, name="A_Operador_Entrada_MP"),
     path('ActualizarOperadoresSalidaMateriaPrima/', actualizar.actualizarOperadoresSalidaMateriasPrimas, name="A_Operador_Salida_MP"),
-    path('ActualizarCancelarServidosVehiculos/', actualizar.actualizarCancelarTolva),
-    
-    # PDF
-    path('Cargamento_tolva/', DescargaPDF.cargamento_tolva, name="C-Tolva"), # PDF para tolvas
-    path('Descarga_PDF_Entrada_Bascula/', DescargaPDF.entradaBasculas, name="PDF_Entrada_Bascula"), # PDF entrada productos
-    path('Descarga_PDF_Salida_Bascula/', DescargaPDF.salidaBasculas, name="PDF_Salida_Bascula"), # PDF salida productos
-    path('Descarga_PDF_Entrada_Materia_Prima/', DescargaPDF.entradaMateriaPrima, name="PDF_Entrada_Materia_Prima"), # PDF entrada materias primas
-    path('Descarga_PDF_Salida_Materia_Prima/', DescargaPDF.salidaMateriaPrima, name="PDF_Salida_Materia_Prima"), # PDF salida materias primas
-    path('Descarga_PDF_Movimiento_Animales/', DescargaPDF.movimientoAnimales, name="PDF_Movimientos_Animales"), # PDF salida materias primas    
-]
+    path('ActualizarCancelarServidosVehiculos/', actualizar.actualizarCancelarTolva, name="A_Pedido_Tolva"),
+    ]

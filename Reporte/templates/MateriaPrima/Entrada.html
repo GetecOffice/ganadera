@@ -88,7 +88,7 @@
                             </form>
                         </div>
                         <div class="col-2">
-                            <form action="/Descarga_PDF_Reporte_Entrada_Materia_Prima/" method="POST">{% csrf_token %}
+                            <form action="{% url 'descargas:PDF_Reportes_Entrada_Materia_Prima' %}" method="POST">{% csrf_token %}
                                 <input type="hidden" value="{{ Contenedor }}" name="Contenedor">
                                 <input type="hidden" value="{{Fecha}}" name="fechaInicial">
                                 <input type="hidden" value="{{Fecha2}}" name="fechaFinal">

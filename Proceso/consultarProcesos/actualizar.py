@@ -551,7 +551,7 @@ def actualizarCancelarTolva(request):
     elif dataInput == "Cancelado":
         EstatusServido = 3
     else :
-        return redirect('T-Cargamento-Tolva')
+        return redirect('proceso:T_Cargamento_Tolva')
     EstatusTolva = 6
     ProductoTolva = 1
     servidotolva = 1
@@ -576,4 +576,4 @@ def actualizarCancelarTolva(request):
     tolva_save.save()
 
     messages.success(request, f'La tolva "{tolva}" se ha actualizado exitosamente.')
-    return redirect('T-Cargamento-Tolva')
+    return redirect('proceso:T_Cargamento_Tolva')
