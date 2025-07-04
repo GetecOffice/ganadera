@@ -13,34 +13,20 @@
                 <div class="card">
 
                     <div class="card-header d-block d-sm-flex border-0">
-                        <div class="row">
-                            <div class="col-sm-10 col-md-10 col-lg-10">
-                                <div class="me-3">
-                                    <h4 class="card-title mb-2">Recolección de datos, linea de producción: tostador
-                                    </h4>
-                                    <span class="fs-12">En la siguiente tabla se mostrara los datos recolectados del
-                                        PLC instalados en cada linea de producción. Los datos de la siguiente tabla se
-                                        actualizan automaticamente cada 5 segundos</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-2 col-md-2 col-lg-2 d-flex justify-content-end">
-                                <a href="{% url 'catalogo:F_Producto'%}">
-                                    <button class="c-button ml-5">
-                                        <span class="c-main">
-                                            <span class="c-ico"><span class="c-blur"></span> <span
-                                                    class="ico-text">+</span></span>
-                                            Agregar
-                                        </span>
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
+                        <h4 class="card-title mb-2">
+                            <a href="{% url 'aplicacion:Menu_Presentacion' %}#Proceso">
+                                <i class="bi bi-arrow-left-circle text-black fs-28"></i>
+                            </a>
+                            <b>SERVIDOS LISTOS</b>
+
+                        </h4>
                     </div>
                     <div class="card-body tab-content p-0">
-                        <div class="card-tabs mt-3 mt-sm-0 px-5 mx-3">
+                        <div class="card-tabs my-5 mt-sm-0 px-5 mx-3">
                             <ul class="nav nav-tabs w-100 d-flex justify-content-between">
                                 <li class="nav-item">
-                                    <a href="{% url 'proceso:T_Solicitud_Servidos' %}" class="nav-link">Corrales pendientes</a>
+                                    <a href="{% url 'proceso:T_Solicitud_Servidos' %}" class="nav-link">Corrales
+                                        pendientes</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{% url 'proceso:FT_Consolidacion' %}" class="nav-link">Cargar en tolva</a>
@@ -119,7 +105,7 @@
                                                 <span class="fs-16 text-black font-w400">
                                                     {{Dato.CantidadSolicitada}}
                                                 </span>
-                                            </td>                                            
+                                            </td>
                                             <td>
                                                 <span class="fs-16 text-black font-w400">
                                                     {{Dato.CantidadServida}}
