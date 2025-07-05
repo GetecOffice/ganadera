@@ -179,7 +179,7 @@ def actualizarUsuario(request):
             messages.success(
                 request, f'El usuario "{email}" se ha actualizado exitosamente.')
     if vista == '1':
-        return redirect('perfil')
+        return redirect('Usuarios:perfil')
     elif vista == '2':
         return redirect('/#Usuarios')
     elif vista == '3':
@@ -201,11 +201,11 @@ def agregarTecnicos(request):
         if 'tabla' in request.POST:
             tabla_v = request.POST.get('tabla')
             contenidoTabla = tblTecnicos.objects.filter(Tecnico__icontains = full_name, NombreTabla = tabla_v, Acciones = 'Agregado') 
-            return render(request, "Configuracion/Tecnicos/Agregados.html", {'grupos': grupos, 'catalogosUL': catalogosUL, 'ServiciosWeb': ServiciosWeb,
+            return render(request, "Registros/Agregados.html", {'grupos': grupos, 'catalogosUL': catalogosUL, 'ServiciosWeb': ServiciosWeb,
             'procesosUL':procesosUL,'subtablaUL':subtablaUL,'tabla_v':tabla_v, 'usuario':usuario, 'contenidoTabla':contenidoTabla})
         else:
             tabla_v = "No se ha seleccionado ninguna tabla"
-            return render(request, "Configuracion/Tecnicos/Agregados.html", {'grupos': grupos, 'catalogosUL': catalogosUL, 'ServiciosWeb': ServiciosWeb,
+            return render(request, "Registros/Agregados.html", {'grupos': grupos, 'catalogosUL': catalogosUL, 'ServiciosWeb': ServiciosWeb,
             'procesosUL':procesosUL,'subtablaUL':subtablaUL,'tabla_v':tabla_v, 'usuario':usuario})
 
 def editadoTecnicos(request):
@@ -224,9 +224,65 @@ def editadoTecnicos(request):
         if 'tabla' in request.POST:
             tabla_v = request.POST.get('tabla')
             contenidoTabla = tblTecnicos.objects.filter(Tecnico__icontains = full_name, NombreTabla = tabla_v, AccionesEditado = 'Editado') 
-            return render(request, "Configuracion/Tecnicos/Editados.html", {'grupos': grupos,'catalogosUL': catalogosUL, 'ServiciosWeb': ServiciosWeb,
+            return render(request, "Registros/Editados.html", {'grupos': grupos,'catalogosUL': catalogosUL, 'ServiciosWeb': ServiciosWeb,
             'procesosUL':procesosUL, 'subtablaUL':subtablaUL,'tabla_v':tabla_v, 'usuario':usuario, 'contenidoTabla':contenidoTabla})
         else:
             tabla_v = "No se ha seleccionado ninguna tabla"
-            return render(request, "Configuracion/Tecnicos/Editados.html", {'grupos': grupos, 'catalogosUL': catalogosUL, 'ServiciosWeb': ServiciosWeb,
+            return render(request, "Registros/Editados.html", {'grupos': grupos, 'catalogosUL': catalogosUL, 'ServiciosWeb': ServiciosWeb,
             'procesosUL':procesosUL, 'subtablaUL':subtablaUL,'tabla_v':tabla_v, 'usuario':usuario})
+
+def perfil(request):
+    grupos = grupo_user(request)
+    user = request.user 
+    full_name = user.first_name + " " + user.last_name
+    FTecnicosTablaCatalogos = tblTecnicos.objects.filter(Tecnico__icontains = full_name, AreaRegistro = 'Catalogos').values('NombreTabla').distinct().order_by('NombreTabla')
+    FTecnicosTablaProcesos = tblTecnicos.objects.filter(Tecnico__icontains = full_name, AreaRegistro = 'Procesos').values('NombreTabla').distinct().order_by('NombreTabla')
+    FTecnicosTablaSubTablas = tblTecnicos.objects.filter(Tecnico__icontains = full_name, AreaRegistro = 'Subtabla').values('NombreTabla').distinct().order_by('NombreTabla')
+    ServiciosWeb = servicioActivo()
+    
+    if request.method == 'POST':
+        TablaCatalogos = request.POST.get('tabla1')
+        TablaProcesos = request.POST.get('tabla2')
+        TablaSubtabla = request.POST.get('tabla3')
+
+        if 'tabla1' in request.POST:
+            TablaProcesos = "Buscar..."
+            TablaSubtabla = "Buscar..."
+            TablaSel = "Catálogos - " + TablaCatalogos
+            TTecnicos = tblTecnicos.objects.filter(Tecnico__icontains=full_name, NombreTabla = TablaCatalogos)
+            return render(request, 'Perfil/index.html', {'grupos': grupos, 'TTecnicos':TTecnicos, 'ServiciosWeb': ServiciosWeb,
+            'FTecnicosTablaCatalogos':FTecnicosTablaCatalogos, 'FTecnicosTablaProcesos':FTecnicosTablaProcesos, 'FTecnicosTablaSubTablas':FTecnicosTablaSubTablas,
+            'TablaCatalogos':TablaCatalogos, 'TablaProcesos':TablaProcesos, 'TablaSubtabla':TablaSubtabla,
+            'tablaseleccionada':TablaSel
+            })
+        if 'tabla2' in request.POST:
+            TablaCatalogos = "Buscar..."
+            TablaSubtabla = "Buscar..."
+            TablaSel = "Procesos - " + TablaProcesos
+            TTecnicos = tblTecnicos.objects.filter(Tecnico__icontains=full_name, NombreTabla = TablaProcesos)
+            return render(request, 'Perfil/index.html', {'grupos': grupos, 'TTecnicos':TTecnicos, 'ServiciosWeb': ServiciosWeb,
+            'FTecnicosTablaCatalogos':FTecnicosTablaCatalogos, 'FTecnicosTablaProcesos':FTecnicosTablaProcesos,'FTecnicosTablaSubTablas':FTecnicosTablaSubTablas,
+            'TablaCatalogos':TablaCatalogos, 'TablaProcesos':TablaProcesos, 'TablaSubtabla':TablaSubtabla,
+            'tablaseleccionada':TablaSel
+             })
+        if 'tabla3' in request.POST:
+            TablaCatalogos = "Buscar..."
+            TablaProcesos = "Buscar..."
+            TablaSel = "Subtablas - " + TablaSubtabla
+            TTecnicos = tblTecnicos.objects.filter(Tecnico__icontains=full_name, NombreTabla = TablaSubtabla)
+            return render(request, 'Perfil/index.html', {'grupos': grupos, 'TTecnicos':TTecnicos, 'ServiciosWeb': ServiciosWeb,
+            'FTecnicosTablaCatalogos':FTecnicosTablaCatalogos, 'FTecnicosTablaProcesos':FTecnicosTablaProcesos, 'FTecnicosTablaSubTablas':FTecnicosTablaSubTablas,
+            'TablaCatalogos':TablaCatalogos, 'TablaProcesos':TablaProcesos, 'TablaSubtabla':TablaSubtabla,
+            'tablaseleccionada':TablaSel
+            })
+    else:
+        TablaCatalogos = "Buscar..."
+        TablaProcesos = "Buscar..."
+        TablaSubtabla = "Buscar..."
+        TTecnicos = tblTecnicos.objects.filter(Tecnico='').all
+        return render(request, 'Perfil/index.html', {'grupos': grupos, 'TTecnicos':TTecnicos, 'ServiciosWeb': ServiciosWeb,
+        'FTecnicosTablaCatalogos':FTecnicosTablaCatalogos, 'FTecnicosTablaProcesos':FTecnicosTablaProcesos, 'FTecnicosTablaSubTablas':FTecnicosTablaSubTablas,
+        'TablaCatalogos':TablaCatalogos, 'TablaProcesos':TablaProcesos, 'TablaSubtabla':TablaSubtabla,
+        'tablaseleccionada':TablaCatalogos,'tablaseleccionada':TablaProcesos,'tablaseleccionada':TablaSubtabla
+        })
+                

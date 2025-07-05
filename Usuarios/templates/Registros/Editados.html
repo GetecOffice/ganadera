@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}CLIENTE{% endblock %}
+{% block body %}
+<!--**********************************
+            Content body start
+        ***********************************-->
+{% block head %}CATALOGO{% endblock %}
+<style>
+    /* Estilos generales del sidebar */
+    #sidebar-nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        background: #f8f9fa;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    /* Estilos de cada item principal */
+    #sidebar-nav .nav-item {
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    /* Enlaces principales colapsables */
+    #sidebar-nav .nav-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+        font-weight: 500;
+        color: #333;
+        text-decoration: none;
+        transition: background 0.3s;
+    }
+
+    #sidebar-nav .nav-link:hover {
+        background: #e9ecef;
+        color: #000;
+    }
+
+    /* Iconos */
+    #sidebar-nav .nav-link i {
+        margin-right: 8px;
+        color: #666;
+    }
+
+    /* Contenido colapsado */
+    #sidebar-nav .nav-content {
+        background: #f1f1f1;
+        padding-left: 1.5rem;
+    }
+
+    #sidebar-nav .nav-content .btn.nav-link {
+        display: flex;
+        align-items: center;
+        padding: 10px 16px;
+        text-align: left;
+        color: #495057;
+        border: none;
+        background: transparent;
+        transition: background 0.2s, color 0.2s;
+    }
+
+    #sidebar-nav .nav-content .btn.nav-link:hover {
+        background: #dee2e6;
+        color: #000;
+    }
+
+    /* Icono de círculo */
+    #sidebar-nav .nav-content i.fa-circle {
+        margin-right: 8px;
+        color: #6c757d;
+    }
+
+    /* Aumentar separación de subelementos */
+    #sidebar-nav .nav-content li {
+        margin-bottom: 5px;
+    }
+
+    /* Quitar margen por defecto en formularios */
+    #sidebar-nav form {
+        margin: 0;
+    }
+
+    /* Responsive (opcional) */
+    @media (max-width: 768px) {
+        #sidebar-nav .nav-link {
+            font-size: 14px;
+        }
+
+        #sidebar-nav .nav-content .btn.nav-link {
+            font-size: 13px;
+        }
+    }
+</style>
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row" style="padding-right: 0 !important;">
+            <div class="col-sm-12 col-xl-12 col-xxl-12" style="padding-right: 0 !important;">
+                <div class="card">
+                    <div class="card-header d-block border-0">
+                        <h4 class="card-title mb-1 d-flex align-items-center">
+                            <a href="{% url 'aplicacion:Menu_Presentacion' %}#Usuarios" class="me-2">
+                                <i class="bi bi-arrow-left-circle text-black fs-28"></i>
+                            </a>
+                            <b>DATOS AGREGADOS POR EL TÉCNICO - {{usuario.first_name}} {{usuario.last_name}}</b>
+                        </h4>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-2">
+                                <ul class="sidebar-nav  pl-4" id="sidebar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link collapsed" data-bs-target="#components-nav-registro-catalogo"
+                                            data-bs-toggle="collapse" href="#">
+                                            <i class="fa fa-folder-open"></i><span>Catálogos</span><i
+                                                class="bi bi-chevron-down ms-auto"></i>
+                                        </a>
+                                        <ul id="components-nav-registro-catalogo" class="nav-content collapse  ml-5"
+                                            data-bs-parent="#sidebar-nav">
+                                            <li class="nav-item">
+                                                {% for TablaCatalogos in catalogosUL %}
+                                                <form action="{% url 'usuario:Editar_tecnicos' %}" method="POST">{% csrf_token %}
+                                                    <input type="hidden" value="{{usuario.id}}" name="usuario">
+                                                    <input type="hidden"
+                                                        value="{{usuario.first_name }} {{usuario.last_name }}"
+                                                        name="full_name">
+                                                    <input type="hidden" value="{{TablaCatalogos.NombreTabla}}"
+                                                        name="tabla">
+                                                    <button type="submit" class="btn nav-link col-12">
+
+                                                        <span>{{TablaCatalogos.NombreTabla}}</span></button>
+                                                </form>
+                                                {% endfor %}
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-2">
+                                <ul class="sidebar-nav  pl-4" id="sidebar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link collapsed" data-bs-target="#components-nav-registro-procesos"
+                                            data-bs-toggle="collapse" href="#">
+                                            <i class="fa fa-folder-open"></i><span>Procesos</span><i
+                                                class="bi bi-chevron-down ms-auto"></i>
+                                        </a>
+                                        <ul id="components-nav-registro-procesos" class="nav-content collapse "
+                                            data-bs-parent="#sidebar-nav">
+                                            <li class="nav-item">
+                                                {% for TablaProcesos in procesosUL %}
+                                                <form action="{% url 'usuario:Editar_tecnicos' %}" method="POST">{% csrf_token %}
+                                                    <input type="hidden" value="{{usuario.id}}" name="usuario">
+                                                    <input type="hidden"
+                                                        value="{{usuario.first_name }} {{usuario.last_name }}"
+                                                        name="full_name">
+                                                    <input type="hidden" value="{{TablaProcesos.NombreTabla}}"
+                                                        name="tabla">
+                                                    <button type="submit" class="btn nav-link col-12">
+
+                                                        <span>{{TablaProcesos.NombreTabla}}</span></button>
+                                                </form>
+                                                {% endfor %}
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-2">
+                                <ul class="sidebar-nav  pl-4" id="sidebar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link collapsed"
+                                            data-bs-target="#components-nav-registro-subtablas"
+                                            data-bs-toggle="collapse" href="#">
+                                            <i class="fa fa-folder-open"></i><span>Subtablas</span><i
+                                                class="bi bi-chevron-down ms-auto"></i>
+                                        </a>
+                                        <ul id="components-nav-registro-subtablas" class="nav-content collapse "
+                                            data-bs-parent="#sidebar-nav">
+                                            <li class="nav-item">
+                                                {% for TablaProcesos in subtablaUL%}
+                                                <form action="{% url 'usuario:Editar_tecnicos' %}" method="POST">{% csrf_token %}
+                                                    <input type="hidden" value="{{usuario.id}}" name="usuario">
+                                                    <input type="hidden"
+                                                        value="{{usuario.first_name }} {{usuario.last_name }}"
+                                                        name="full_name">
+                                                    <input type="hidden" value="{{TablaProcesos.NombreTabla}}"
+                                                        name="tabla">
+                                                    <button type="submit" class="btn nav-link col-12">
+
+                                                        <span>{{TablaProcesos.NombreTabla}}</span></button>
+                                                </form>
+                                                {% endfor %}
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body tab-content p-0">
+
+                        <h6 class="h6-form centrar">Tabla seleccionada: {{tabla_v}}</h6>
+                        <div class="tab-pane active show fade" id="monthly" role="tabpanel">
+                            <div class="table-responsive px-4">
+                                <table class="table table-responsive-md card-table transactions-table" id="miTabla">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-black fs-16 font-w600 th-responsive">
+                                                ID Tabla
+                                            </th>
+                                            <th class="text-black fs-16 font-w600 th-responsive">
+                                                FOLIO
+                                            </th>
+                                            <th class="text-black fs-16 font-w600 th-responsive">
+                                                TECNICO AGREGO
+                                            </th>
+                                            <th class="text-black fs-16 font-w600 th-responsive">
+                                                FECHA AGREGADO
+                                            </th>
+                                            <th class="text-black fs-16 font-w600 th-responsive">
+                                                FECHA EDITADO
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for Dato in contenidoTabla %}
+                                        <tr>
+                                            <td>
+                                                <span class="fs-16 text-black font-w400">
+                                                    {{Dato.IDFila}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="fs-16 text-black font-w400">
+                                                    {{Dato.IDFilaTabla}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="fs-16 text-black font-w400">
+                                                    {{Dato.Tecnico}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="fs-16 text-black font-w400">
+                                                    {{Dato.Fecha}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="fs-16 text-black font-w400">
+                                                    {{Dato.FechaActualizado}}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

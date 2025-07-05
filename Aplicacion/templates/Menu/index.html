@@ -1245,8 +1245,16 @@
 
                                                 <div class="mt-2">
                                                     <p class="label-title">Registro de datos</p>
-                                                    <a href="#" class="btn-action edit">Editados</a>
-                                                    <form action="/Agregar-Tecnicos/" method="POST" class="d-inline">
+                                                    <!-- <a href="{% url 'usuario:Editar_tecnicos' %}" class="btn-action edit">Editados</a> -->
+                                                    <form action="{% url 'usuario:Editar_tecnicos' %}" method="POST" class="d-inline">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="usuario"
+                                                            value="{{ item.usuario.id }}">
+                                                        <input type="hidden" name="full_name"
+                                                            value="{{ item.usuario.first_name }} {{ item.usuario.last_name }}">
+                                                        <button type="submit" class="btn-action edit">Editados</button>
+                                                    </form>
+                                                    <form action="{% url 'usuario:Agregar_tecnicos' %}" method="POST" class="d-inline">
                                                         {% csrf_token %}
                                                         <input type="hidden" name="usuario"
                                                             value="{{ item.usuario.id }}">
