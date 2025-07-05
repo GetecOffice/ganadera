@@ -122,7 +122,7 @@
                         <div class="row g-3">
                             <!-- Catálogos -->
                             <div class="col-12 col-md-4">
-                                <form action="/Perfil/" method="POST">
+                                <form action="{% url 'usuario:perfil' %}" method="POST">
                                     {% csrf_token %}
                                     <h4 class="form-label fw-semibold">Catálogos</h4>
                                     <div class="d-flex align-items-center">
@@ -143,7 +143,7 @@
 
                             <!-- Procesos -->
                             <div class="col-12 col-md-4">
-                                <form action="/Perfil/" method="POST">
+                                <form action="{% url 'usuario:perfil' %}" method="POST">
                                     {% csrf_token %}
                                     <h4 class="form-label fw-semibold">Procesos</h4>
                                     <div class="d-flex align-items-center">
@@ -164,7 +164,7 @@
 
                             <!-- Subtablas -->
                             <div class="col-12 col-md-4">
-                                <form action="/Perfil/" method="POST">
+                                <form action="{% url 'usuario:perfil' %}" method="POST">
                                     {% csrf_token %}
                                     <h4 class="form-label fw-semibold">Subtablas</h4>
                                     <div class="d-flex align-items-center">
