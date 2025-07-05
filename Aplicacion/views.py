@@ -743,8 +743,8 @@ def menuInfo(request):
     
     # USUARIOS
     usuarios_con_grupo = []
-    TUsuarios = User.objects.all()
-# .exclude(username="admin@gmail.com")
+    TUsuarios = User.objects.all().exclude(username="admin@gmail.com")
+
     for usuario in TUsuarios:
         is_authenticated = usuario.is_authenticated
         grupos = usuario.groups.exclude(name='Bloqueado')
