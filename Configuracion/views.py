@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from Aplicacion.models import *
 import time
-from Aplicacion.views import servicioActivo, agregarDatosTecnicos, editarDatosTecnicos
+from Usuarios.views import servicioActivo, agregarDatosTecnicos, editarDatosTecnicos
 @login_required
 def grupo_user(request):
     user = request.user

@@ -3,7 +3,7 @@ from django.contrib import messages
 # LLAMAR ARCHIVOS LOCALES
 from Aplicacion.forms import *
 from Aplicacion.models import *
-from Aplicacion.views import editarDatosTecnicos
+from Usuarios.views import editarDatosTecnicos
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ACTUALIZAR DATOS CATALOGOS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # --------------------------------------------------------CLIENTES---------------------------------------------------------
 def actualizarEstatus(request):

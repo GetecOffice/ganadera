@@ -1,15 +1,11 @@
 from django.urls import path
 from . import views
-from Proceso.consultarProcesos import actualizar, agregar, editar, mostrar, formulario, presentacion, DescargaPDF
+from Proceso.consultarProcesos import actualizar, agregar, editar, mostrar, formulario
 
 
 urlpatterns = [
     path('', views.homeProcesos, name='Inicio'),
-   
-    #  Presentacion
-    path('Servidos_presentacion/', presentacion.presentacionServidos, name='Servidos_Presentacion'),
-    path('Bascula_presentacion/', presentacion.presentacionBascula, name='Bascula_Presentacion'),
-    path('Invenario_presentacion/', presentacion.presentacionInventario, name='Inventario_Presentacion'),
+
     
    # Tablas
     path('Entrada_Materia_Prima/', mostrar.TablaEntradaMateriasPrimas, name='T_Ent_Materia_Prima'),

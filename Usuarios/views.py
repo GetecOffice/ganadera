@@ -6,6 +6,7 @@ from django.contrib import messages
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth.decorators import login_required
 # Create your views here.
+from django.utils import timezone
 # ---------------------------------------------------CONSULTA PARA LAS TABLAS DE USUARIOS---------------------------------------------------}
 
 @login_required
@@ -286,3 +287,28 @@ def perfil(request):
         'tablaseleccionada':TablaCatalogos,'tablaseleccionada':TablaProcesos,'tablaseleccionada':TablaSubtabla
         })
                 
+def agregarDatosTecnicos(request, Tecnico_v, NombreTabla_v, IDFilaTabla_v, AreaRegistro_v, IDFila_v):
+    try:
+        Acciones_v = 'Agregado'
+        Fecha_v  = timezone.localtime(timezone.now()).strftime('%Y-%m-%d %H:%M')
+        
+        tblTecnicos.objects.create(
+            Tecnico = Tecnico_v, NombreTabla = NombreTabla_v, IDFilaTabla = IDFilaTabla_v, 
+            Acciones = Acciones_v, Fecha = Fecha_v, AreaRegistro = AreaRegistro_v, IDFila = IDFila_v
+        )
+    except Exception as e:
+        print("Error ", e)
+        
+def editarDatosTecnicos(request, TecnicoEditor_v, NombreTabla_v, IDFilaTabla_v):
+    try:
+        Acciones_v = 'Editado'
+        FechaEditor_v   = timezone.localtime(timezone.now()).strftime('%Y-%m-%d %H:%M')
+        
+        tecnicos_editor = tblTecnicos.objects.get(IDFila=IDFilaTabla_v, NombreTabla=NombreTabla_v)
+        tecnicos_editor.TecnicoEditor = TecnicoEditor_v
+        tecnicos_editor.FechaActualizado = FechaEditor_v
+        tecnicos_editor.AccionesEditado = Acciones_v
+        tecnicos_editor.save()
+    except Exception as e:
+        print("Error ", e)
+                      

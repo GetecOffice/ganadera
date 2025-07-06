@@ -4,7 +4,7 @@ from django.contrib import messages
 # LLAMAR ARCHIVOS LOCALES
 from Aplicacion.forms import *
 from Aplicacion.models import *
-from Aplicacion.views import agregarDatosTecnicos
+from Usuarios.views import agregarDatosTecnicos
 from datetime import datetime, date
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< GUARDAR FORMULARIO SubTablas >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 

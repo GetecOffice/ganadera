@@ -6,7 +6,7 @@ from django.utils import timezone
 from Aplicacion.forms import *
 from Aplicacion.models import *
 
-from Aplicacion.views import servicioActivo, estadoPago, registrarPago, grupo_user
+from Usuarios.views import servicioActivo, estadoPago, registrarPago, grupo_user
 
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404

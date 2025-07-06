@@ -3,7 +3,7 @@ from django.shortcuts import render
 from Aplicacion.forms import *
 from Aplicacion.models import *
 from django.db.models import Sum
-from Aplicacion.views import servicioActivo,grupo_user
+from Usuarios.views import servicioActivo,grupo_user
 from django.contrib import messages
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TABLAS DE CATALOGOS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 

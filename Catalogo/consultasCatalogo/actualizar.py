@@ -4,7 +4,8 @@ from django.contrib import messages
 from django.db.models import Q
 from Aplicacion.forms import *
 from Aplicacion.models import *
-from Aplicacion.views import editarDatosTecnicos
+from Usuarios.views import editarDatosTecnicos, agregarDatosTecnicos
+from django.utils import timezone
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ACTUALIZAR DATOS CATALOGOS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # --------------------------------------------------------CLIENTES---------------------------------------------------------
 def actualizarCliente(request):

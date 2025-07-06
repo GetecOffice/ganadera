@@ -5,7 +5,7 @@ from django.utils import timezone
 # LLAMAR ARCHIVOS LOCALES
 from Aplicacion.forms import *
 from Aplicacion.models import *
-from Aplicacion.views import editarDatosTecnicos
+from Usuarios.views import editarDatosTecnicos
 from django.db.models import Sum
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ACTUALIZAR DATOS PROCESOS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # --------------------------------------------------SERVIDOS MANUALES---------------------------------------------------------

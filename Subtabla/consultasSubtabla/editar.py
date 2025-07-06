@@ -2,7 +2,7 @@ from django.shortcuts import render
 # LLAMAR ARCHIVOS LOCALES
 from Aplicacion.forms import *
 from Aplicacion.models import *
-from Aplicacion.views import grupo_user
+from Usuarios.views import grupo_user
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< EDITAR FORMULARIO CATALOGOS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # --------------------------------------------------------CLIENTES---------------------------------------------------------

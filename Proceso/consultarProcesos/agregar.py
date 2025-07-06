@@ -4,8 +4,8 @@ from django.db.models import Sum
 # LLAMAR ARCHIVOS LOCALES
 from Aplicacion.forms import *
 from Aplicacion.models import *
-from Aplicacion.views import agregarDatosTecnicos
-from Aplicacion.views import servicioActivo, grupo_user
+from Usuarios.views import agregarDatosTecnicos
+from Usuarios.views import servicioActivo, grupo_user
 from datetime import datetime, date
 from django.utils import timezone
 from django.db.models import Q

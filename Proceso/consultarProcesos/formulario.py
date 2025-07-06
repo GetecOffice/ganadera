@@ -4,7 +4,7 @@ from django.utils import timezone
 # LLAMAR ARCHIVOS LOCALES
 from Aplicacion.forms import *
 from Aplicacion.models import *
-from Aplicacion.views import servicioActivo, grupo_user
+from Usuarios.views import servicioActivo, grupo_user
 from django.db.models import Q
 
 def FormularioEntradaMateriasPrimas(request):

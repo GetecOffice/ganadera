@@ -791,7 +791,7 @@
                                 <!-- Inventario -->
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     {% if perms.Aplicacion.add_tblinventarioinicialesmp or perms.Aplicacion.view_tblinventarioinicialesmp or perms.Aplicacion.add_tblinventarioinicialesproductos or perms.Aplicacion.view_tblinventarioinicialesproductos %}
-                                    <a href="{% url 'proceso:Inventario_Presentacion' %}">
+                                    <a href="#">
                                         {% else %}
                                         <button class="mi-boton" data-bs-toggle="modal" data-bs-target="#sinPermisos">
                                             {% endif %}

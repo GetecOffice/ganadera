@@ -9,7 +9,7 @@ from Aplicacion.forms import *
 from Aplicacion.models import *
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from Aplicacion.views import servicioActivo, grupo_user
+from Usuarios.views import servicioActivo, grupo_user
 
 
 def obtener_corrales(request, id):
