@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
 
     <title>{% block title %}GANADERA{% endblock %}</title>
 
@@ -23,6 +23,12 @@
 
 <body>
     <style>
+        li.active a {
+            background-color: #e1e1e1;
+            font-weight: bold;
+            color: #000;
+        }
+
         .dataTables_filter input[type="search"] {
             border: 1px solid black;
             background-color: white;
@@ -158,7 +164,7 @@
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left">
                             <div class="dashboard_bar">
-                               MENÚ
+                                MENÚ
                             </div>
                         </div>
                         <ul class="navbar-nav header-right">
@@ -208,53 +214,55 @@
                         <a class="nav-link" href="{% url 'usuario:perfil' %}">
                             <img src="{% static 'images/catalogos/perfil.png' %}" width="20" alt="" />
                             <div class="header-info ms-3">
-                                <span class="font-w600 center">Hola, <b> {{user.first_name}}<br>{{user.last_name}}</b></span>
+                                <span class="font-w600 center">Hola, <b>
+                                        {{user.first_name}}<br>{{user.last_name}}</b></span>
                                 <small class="text-end font-w400">{{user.username}}</small>
                             </div>
                         </a>
 
                     </li>
                     <li><a href="{% url 'aplicacion:Menu_Presentacion' %}#Inicio" class="ai-icon" aria-expanded="false">
-                            <i class="flaticon-013-checkmark"></i>
+                            <i class="flaticon-381-home"></i>
                             <span class="nav-text">INICIO</span>
                         </a>
                     </li>
                     <li><a href="{% url 'aplicacion:Menu_Presentacion' %}#Catalogo" class="ai-icon"
                             aria-expanded="false">
-                            <i class="flaticon-013-checkmark"></i>
-                            <span class="nav-text">CATALOGO</span>
+                            <i class="flaticon-381-layer"></i>
+                            <span class="nav-text">CATÁLOGO</span>
                         </a>
                     </li>
                     <li><a href="{% url 'aplicacion:Menu_Presentacion' %}#Proceso" class="ai-icon"
                             aria-expanded="false">
-                            <i class="flaticon-013-checkmark"></i>
+                            <i class="flaticon-381-settings-2"></i>
                             <span class="nav-text">PROCESOS</span>
                         </a>
                     </li>
                     <li><a href="{% url 'aplicacion:Menu_Presentacion' %}#Subtabla" class="ai-icon"
                             aria-expanded="false">
-                            <i class="flaticon-013-checkmark"></i>
+                            <i class="flaticon-381-networking"></i>
                             <span class="nav-text">SUBTABLAS</span>
                         </a>
                     </li>
                     <li><a href="{% url 'aplicacion:Menu_Presentacion' %}#Reportes" class="ai-icon"
                             aria-expanded="false">
-                            <i class="flaticon-013-checkmark"></i>
+                            <i class="flaticon-381-notepad"></i>
                             <span class="nav-text">REPORTES</span>
                         </a>
                     </li>
                     <li><a href="{% url 'aplicacion:Menu_Presentacion' %}#Usuarios" class="ai-icon"
                             aria-expanded="false">
-                            <i class="flaticon-013-checkmark"></i>
+                            <i class="flaticon-381-user"></i>
                             <span class="nav-text">USUARIOS</span>
                         </a>
                     </li>
                     <li><a href="{% url 'aplicacion:Menu_Presentacion' %}#Configuracion" class="ai-icon"
                             aria-expanded="false">
-                            <i class="flaticon-013-checkmark"></i>
+                            <i class="flaticon-381-settings"></i>
                             <span class="nav-text">CONFIGURACIÓN</span>
                         </a>
                     </li>
+
                     <!-- <li><a href="{% url 'aplicacion:Login' %}" class="ai-icon" aria-expanded="false">
                             <i class="flaticon-013-checkmark"></i>
                             <span class="nav-text">INICIAR </span>
@@ -397,6 +405,33 @@
     <script>
         $(function () {
             $('.select2').select2();
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Función para actualizar la clase activa según el hash
+            function activarSeccionPorHash() {
+                // Remueve la clase 'active' de todos los <li>
+                document.querySelectorAll("li").forEach(li => li.classList.remove("active"));
+
+                // Obtiene el hash de la URL (sin el #)
+                const hash = window.location.hash;
+
+                if (hash) {
+                    // Busca el <a> cuyo href termina con ese hash
+                    const link = document.querySelector(`a[href$="${hash}"]`);
+                    if (link) {
+                        // Agrega la clase 'active' al <li> contenedor
+                        link.closest("li").classList.add("active");
+                    }
+                }
+            }
+
+            // Activar cuando se carga la página
+            activarSeccionPorHash();
+
+            // También actualizar cuando el hash cambie (por scrolleo manual o JS)
+            window.addEventListener("hashchange", activarSeccionPorHash);
         });
     </script>
 
