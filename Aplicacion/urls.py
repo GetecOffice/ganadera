@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-from Aplicacion.CRUD import Correo, cliente, CopiaDeSeguridad, CopiaAMysql
+from Aplicacion.CRUD import Correo, cliente, CopiaDeSeguridad, CopiaAMysql, latido
 
 # from .views import PDFView formularioCatalogos
 from django.contrib.auth.views import LoginView, LogoutView
@@ -12,6 +12,9 @@ from .views import CustomLoginView
 
 
 urlpatterns = [
+     # Latido
+     path('iniciar_latido/', latido.iniciar_latido, name='iniciar_latido'), 
+     
      #  Presentacion
      path('', views.menuInfo, name='Menu_Presentacion'),
     

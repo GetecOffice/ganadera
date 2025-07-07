@@ -12,10 +12,12 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+load_dotenv(Path.joinpath(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -80,7 +82,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Ganadera.wsgi.application'
 
-
+# # latido
+# DATABASE_URL = os.environ.get("DATABASE_URL")
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -88,7 +91,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'Respaldo_MYSQL.sqlite3',
-    }
+    },
+    'servidor': dj_database_url.config(default=os.getenv("url_database"))
 }
 
 

@@ -1,6 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Permission, AbstractBaseUser, BaseUserManager
+# LATIDO PARA VERIFICACION DE SERVIDOR
+class Registro(models.Model):
+    ID = models.AutoField(primary_key=True)
+    descripcion = models.CharField(max_length=100)
+    estatus = models.IntegerField(default=0)
+    actualizado = models.DateTimeField(auto_now=True)
+
+    
 # -------------------------------------------------------SUBTABLAS-------------------------------------------------------
 class tblConfiguracion(models.Model):
     ID = models.AutoField(primary_key=True)
