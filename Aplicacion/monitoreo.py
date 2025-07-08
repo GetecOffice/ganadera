@@ -12,9 +12,9 @@ from Aplicacion.models import Registro
 
 def monitorear():
     while True:
-        registro = Registro.objects.using('servidor').filter(estatus=3).first()
+        registro = Registro.objects.using('servidor').filter(estatus=2).first()
         if registro:
-            registro.estatus = 4
+            registro.estatus = 1
             registro.save(using='servidor')
             print(f"✔ Actualizado: {registro.descripcion}")
         else:
